@@ -1,3 +1,7 @@
+*{
+    --point-purple:#490B5F;
+}
+
 .head-bar {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
 
@@ -10,7 +14,7 @@
     height: 80px;
 
     display: flex;
-    flex-direction: rows;
+    flex-direction: row;
     align-items: center;
     justify-content: left;
 }
@@ -21,7 +25,7 @@
 
 .head-bar > h1 {
     font-family: 'Do Hyeon', sans-serif;
-    color: #490B5F;
+    color: var(--point-purple);
     margin-left: 50px;
     font-size: 32px;
 }
@@ -34,7 +38,7 @@
 }
 
 .hat-box {
-    background-color: #490B5F;
+    background-color: var(--point-purple);
     height: 35px;
     width: 35px;
     margin: 10px;
