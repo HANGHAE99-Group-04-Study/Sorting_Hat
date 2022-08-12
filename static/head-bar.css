@@ -17,6 +17,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: left;
+
+    z-index: 10;
 }
 
 .head-bar:hover {
