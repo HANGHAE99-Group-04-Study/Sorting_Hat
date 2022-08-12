@@ -4,6 +4,10 @@
 name: Python application
 
 on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   schedule:
     # 실제 스케쥴 작업이 시작될 cron을 등록하면 됩니다.
     # 크론은 https://crontab.guru/ 여기서 확인하면 좋을 것 같습니다.
