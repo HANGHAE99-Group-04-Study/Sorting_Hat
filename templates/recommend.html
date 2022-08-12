@@ -20,7 +20,7 @@
             width: 100%;
             height: 100%;
             position: relative;
-            z-index: -1;
+            background-color: red;
         }
 
         .wrap-age {
@@ -44,16 +44,16 @@
 
         .wrap-movie {
             width: 95%;
-            height: 840px;
-            margin-top: 70px;
+            height: 800px;
             margin-right: auto;
             margin-left: auto;
             text-align: center;
+            padding-top: 80px;
         }
 
         .wrap-movie_1 {
             width: 100%;
-            height: 395px;
+            height: 350px;
 
             display: flex;
             flex-direction: row;
@@ -63,7 +63,7 @@
 
         .movies {
             width: 270px;
-            height: 395px;
+            height: 350px;
             background-color: white;
             margin-left: auto;
             margin-right: auto;
@@ -98,6 +98,7 @@
         })
         // END Wheel 동작 입력받아 페이지 이동
 
+        // START AGE입력
         function enter_age(){
             if(event.keyCode=='13') {
                 let val_age;
@@ -109,8 +110,76 @@
                     $('#id_age').text(val_age);
                 }
             }
-
         }
+        // END AGE입력
+
+        // START 좋아하거나 관심있는 MOVIE 선택
+        let arr_movies = [];
+        arr_movies[0] = {
+            name:'명량',
+            genre: ['액션','드라마'],
+            img_url: 'https://movie-phinf.pstatic.net/20140721_186/1405911310756Tt2X1_JPEG/movie_image.jpg'
+        }
+        arr_movies[1] = {
+            name:'해리 포터와 마법사의 돌',
+            genre: ['판타지','가족', '모험', '액션'],
+            img_url: 'https://movie-phinf.pstatic.net/20181019_236/1539926790655oHv5z_JPEG/movie_image.jpg'
+        }
+        arr_movies[2] = {
+            name:'타이타닉',
+            genre: ['멜로/로맨스', '드라마'],
+            img_url: 'https://movie-phinf.pstatic.net/20181129_107/1543452551390CN9TW_JPEG/movie_image.jpg'
+        }
+        arr_movies[3] = {
+            name:'추격자',
+            genre: ['범죄', '스릴러', '액션'],
+            img_url: 'https://movie-phinf.pstatic.net/20111223_156/1324566721937R1fPE_JPEG/movie_image.jpg'
+        }
+        arr_movies[4] = {
+            name:'인터스텔라',
+            genre: ['SF'],
+            img_url: 'https://movie-phinf.pstatic.net/20160106_138/1452044846608eaFcJ_JPEG/movie_image.jpg'
+        }
+        arr_movies[5] = {
+            name:'극한직업',
+            genre: ['코미디'],
+            img_url: 'https://movie-phinf.pstatic.net/20190116_206/1547615429111dINWj_JPEG/movie_image.jpg'
+        }
+        arr_movies[6] = {
+            name:'겨울왕국',
+            genre: ['애니메이션', '모험', '코미디', '가족', '판타지', '뮤지컬'],
+            img_url: 'https://movie-phinf.pstatic.net/20170418_82/1492496178995pHxdA_JPEG/movie_image.jpg'
+        }
+        arr_movies[7] = {
+            name:'컨저링',
+            genre: ['공포','스릴러'],
+            img_url: 'https://movie-phinf.pstatic.net/20130902_93/1378099837014UAvor_JPEG/movie_image.jpg'
+        }
+        arr_movies[8] = {
+            name:'기생충',
+            genre: ['드라마'],
+            img_url: 'https://movie-phinf.pstatic.net/20190528_36/1559024198386YVTEw_JPEG/movie_image.jpg'
+        }
+        arr_movies[9] = {
+            name:'보헤미안 랩소디',
+            genre: ['드라마'],
+            img_url: 'https://movie-phinf.pstatic.net/20181213_264/1544692854634ss65r_JPEG/movie_image.jpg'
+        }
+        arr_movies[10] = {
+            name:'어벤져스:엔드게임',
+            genre: ['액션', 'SF'],
+            img_url: 'https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg'
+        }
+        arr_movies[11] = {
+            name:'포레스트 검프',
+            genre: ['드라마', '코미디'],
+            img_url: 'https://movie-phinf.pstatic.net/20160901_187/1472711688297YP2jH_JPEG/movie_image.jpg'
+        }
+
+        for(let i=0; i < arr_movies.length; i++){
+            console.log('dd')
+        }
+        // END 좋아하거나 관심있는 MOVIE 선택
     </script>
 </head>
 <body>
