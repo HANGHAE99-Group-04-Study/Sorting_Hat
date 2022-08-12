@@ -4,10 +4,10 @@
 name: 상영작 불러오기
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
   schedule:
     # 매일 새벽 5시 업데이트
     - cron: '0 20 * * *'
