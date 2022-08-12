@@ -15,3 +15,7 @@
 > 사용자의 나이 및 선호 장르를 기반하여 현재 상영중인 영화 추천
 
 #### [figma 기획 페이지](https://www.figma.com/file/vJUYcXXqeRVoysYiRy8zMR/1st-toyproject?node-id=0%3A1) - [@roses16-dev](https://github.com/roses16-dev)
+
+
+#### DB 업데이트 상태
+[![상영작 불러오기](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml/badge.svg)](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml)
