@@ -1,6 +1,11 @@
-import requests
+import requests, jsonify, os
 from bs4 import BeautifulSoup
+from pymongo import MongoClient
 import re
+
+import certifi
+client = MongoClient(os.environ.get("MONGO"),tlsCAFile=certifi.where())
+db = client.Sorting_Hat_Dev
 
 url = 'https://movie.naver.com/movie/running/current.naver'
 
@@ -13,9 +18,11 @@ soup = BeautifulSoup(data.text, 'html.parser')
 # select를 이용해서, li들을 불러오기
 movies = soup.select('#content > div.article > div > div.lst_wrap > ul > li')
 
+db.movies.drop() # DB movie 컬렉션 삭제
+
 # movies (li들) 의 반복문을 돌리기
 for movie in movies:
-    c_title = movie.select_one('dl > dt > a')  # 영화제목
+    c_title = movie.select_one('dl > dt > a').text  # 영화제목
     c_img = movie.select_one('div > a > img')['src']  # 영화 이미지 링크
     c_n_star = movie.select_one('dl > dd.star > dl > dd:nth-child(2) > div > a > span.num').text  # 유저 평점
     try:
@@ -24,4 +31,11 @@ for movie in movies:
         c_r_star = '0.00'
     c_release = re.search(r'\d{3,4}.*.봉', movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2)').text).group() # 개봉일
 
-    print(c_title.text, " ", c_img, " ", c_n_star, " ", c_r_star, " ", c_release)
+    doc = {
+        'title': c_title,
+        'image': c_img,
+        'user_star': c_n_star,
+        'reviewer_star': c_r_star,
+        'release': c_release
+    }
+    db.movies.insert_one(doc) # DB 최신데이타 등록
