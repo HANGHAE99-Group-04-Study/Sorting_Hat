@@ -8,6 +8,12 @@
     <link href="../static/head-bar.css" rel="stylesheet">
 
     <style>
+        a{
+            /*임시*/
+            text-decoration: none;
+            color: white;
+        }
+
         html, body {
             background-color: black;
             color:white;
@@ -20,7 +26,6 @@
             width: 100%;
             height: 100%;
             position: relative;
-            background-color: black;
         }
 
         .wrap-age {
@@ -43,17 +48,15 @@
         }
 
         .wrap-movie-question {
-            width: 95%;
-            height: 800px;
-            margin-right: auto;
-            margin-left: auto;
+            width: 100%;
+            height: 900px;
             text-align: center;
-            padding-top: 120px;
+            padding-top: 100px;
         }
 
         .wrap-movies {
             width: 100%;
-            height: 350px;
+            height: 380px;
 
             display: flex;
             flex-direction: row;
@@ -61,36 +64,61 @@
             justify-content: left;
         }
 
-        .movies {
-            width: 270px;
-            height: 350px;
-            background-color: black;
+        .poster {
+            width: 265px;
+            height: 380px;
             margin-left: auto;
             margin-right: auto;
-            overflow: hidden;
+            position: relative;
         }
-
-        .pick-movie {
-            width: 270px;
-            height: 350px;
-            background-color: black;
-            margin-left: auto;
-            margin-right: auto;
-            overflow: hidden;
-
-            border: solid var(--point-purple);
-            border-radius: 20px;
-        }
-
-        .movies-img {
+        .poster .poster-thumbnail {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            image-rendering: smooth;
+            filter: brightness(0.5);
+        }
+        .poster .poster-thumbnail:hover{
+            filter: brightness(1);
+        }
+        .poster .stamp{
+
+            display: none;
         }
 
+        .picked-poster {
+            width: 265px;
+            height: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .picked-poster .poster-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: smooth;
+        }
+
+        .picked-poster .stamp {
+            position: absolute;
+            top: 80%;
+            left: 70%;
+            width: 80px;
+            height: 80px;
+        }
+
+        .section_temp {
+            position: absolute;
+            top: 300px;
+        }
     </style>
 
     <script>
+        let num_pickRate = -1;
+        let arr_pickGenre = [];
+
         // page 로딩되었을 때 실행되는 함수
         $(document).ready(function () {
             load_movies();
@@ -124,15 +152,32 @@
 
         // START AGE입력
         function enter_age(){
-            if(event.keyCode=='13') {
+            if (event.keyCode == '13') {
                 let val_age;
                 val_age = document.getElementById('id_input_age').value;
-                if(isNaN(val_age)){
-                    alert('숫자로 입력해주세요.')
-                }else{
-                    $('#id_input_age').hide();
-                    $('#id_age').text(val_age);
+
+                if (isNaN(val_age)) {
+                    alert('숫자로 입력해주세요.');
+                    return;
                 }
+                if (val_age < 0) {
+                    alert('정확한 나이를 입력해주세요.');
+                    return;
+                }
+                $('#id_input_age').hide();
+                $('#id_age').text(val_age);
+
+                if( val_age >= 18){
+                    num_pickRate = 3;
+                } else if(val_age >= 15) {
+                    num_pickRate = 2;
+                } else if(val_age >= 12) {
+                    num_pickRate = 1;
+                } else {
+                    num_pickRate = 0;
+                }
+
+                console.log('num_pickRate : ' + num_pickRate);
             }
         }
         // END AGE입력
@@ -202,9 +247,10 @@
 
         function load_movies() {
             for (let i = 0; i < arr_movies.length; i++) {
-                let temp_html = `<div class="movies" id ="movie_${i}" onclick="pick_movie(${i})">
-                                <img src="${arr_movies[i]['img_url']}" class="movies-img">
-                            </div>`;
+                let temp_html = `<div class="poster" id ="movie_${i}">
+                                    <img src="${arr_movies[i]['img_url']}" class="poster-thumbnail" onclick="pick_movie(${i})">
+                                    <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp" id="id_stamp">
+</div>`;
                 if (i < 6) {
                     $('#wrap_movie_top').append(temp_html)
                 } else {
@@ -213,14 +259,79 @@
             }
         }
 
-        function pick_movie(num_movie){
-            alert(num_movie);
-            // 1. 이미 선택되어있는 친구인지 체크
-            // 2. style 바꿔주기
-            // 3.
+        let arr_pickMovies = [];
+
+        function putOn_movie(num) {
+            arr_pickMovies.push(num);
+            document.getElementById('movie_'+num).className = 'picked-poster';
+            console.log(arr_pickMovies);
         }
 
+        function putDown_movie(num) {
+            if(!(arr_pickMovies.indexOf(num) == -1)) {
+                arr_pickMovies.splice(arr_pickMovies.indexOf(num), 1);
+                document.getElementById('movie_'+num).className = 'poster';
+            }
+        }
+
+        function pick_movie(num_movie){
+            if( arr_pickMovies.indexOf(num_movie) == -1) {
+            // 이미 선택된 영화가 아닐 경우
+                if(arr_pickMovies.length >= 2){
+                // 이미 2개가 모두 선택된 경우
+                    alert('이미 두개를 선택하셨습니다.');
+                } else {
+                // 선택이 가능한 경우
+                    putOn_movie(num_movie);
+                }
+            } else {
+            // 이미 선택된 영화일 경우
+                putDown_movie(num_movie);
+            }
+        }
         // END 좋아하거나 관심있는 MOVIE 선택
+
+        function check_input(){
+            if(num_pickRate < 0 || num_pickRate > 3){
+                alert('나이를 입력해주세요');
+
+                page = 1;
+                var posTop = (page - 1) * $(window).height();
+                mHtml.animate({scrollTop: posTop});
+                return false;
+            }
+
+            if(arr_pickMovies.length < 2){
+                alert('영화를 선택해주세요.');
+
+                page = 2;
+                var posTop = (page - 1) * $(window).height();
+                mHtml.animate({scrollTop: posTop});
+                return false;
+            }
+
+            return true;
+        }
+
+        function calc_genre() {
+            arr_pickGenre = [];
+            for (let i = 0; i < arr_pickMovies.length; i++) {
+                for (let j = 0; j < arr_movies[arr_pickMovies[i]]['genre'].length; j++) {
+                    let str_temp = arr_movies[arr_pickMovies[i]]['genre'][j];
+
+                    if (arr_pickGenre.indexOf(str_temp) == -1) {
+                        arr_pickGenre.push(str_temp);
+                    }
+                }
+            }
+        }
+        function calc_movie() {
+            if (!check_input())
+                return;
+
+            calc_genre();
+            console.log(arr_pickGenre);
+        }
     </script>
 </head>
 <body>
@@ -256,7 +367,11 @@
     </div>
     <!--END : 좋아하는 영화 질문 -->
 
-    <div class="section" id="section_with">섹션3</div>
+    <div class="section" id="section_with">
+        <div class="section_temp">
+            <a href="#" onclick="calc_movie(); return false;">결과</a>
+        </div>
+    </div>
 </body>
 </html>
 
