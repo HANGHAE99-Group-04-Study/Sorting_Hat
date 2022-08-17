@@ -24,7 +24,7 @@ movies = soup.select('#content > div.article > div > div.lst_wrap > ul > li')
 for movie in movies:
     c_id = re.search(r'(?<=code\=)(.*?)$', movie.select_one('dl > dt > a')['href']).group() # 영화별 고유 ID값
     c_title = movie.select_one('dl > dt > a').text  # 영화제목
-    c_img = movie.select_one('div > a > img')['src']  # 영화 이미지 링크
+    c_img = re.search(r'(.*?)(?=\?)', movie.select_one('div > a > img')['src']).group() # 영화 이미지 링크
 
     # 영화 등급 가져오기
     # 등급 리스트
