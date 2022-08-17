@@ -18,7 +18,7 @@ soup = BeautifulSoup(data.text, 'html.parser')
 # select를 이용해서, li들을 불러오기
 movies = soup.select('#content > div.article > div > div.lst_wrap > ul > li')
 
-db.movies.drop() # DB movie 컬렉션 삭제
+# db.movies.drop() # DB movie 컬렉션 삭제
 
 # movies (li들) 의 반복문을 돌리기
 for movie in movies:
@@ -38,4 +38,24 @@ for movie in movies:
         'reviewer_star': c_r_star,
         'release': c_release
     }
-    db.movies.insert_one(doc) # DB 최신데이타 등록
+    db.movies.update_one(
+        {'title': doc['title']},
+        {
+            "$setOnInsert": {
+                'title': doc['title'],
+                'image': doc['image'],
+                'user_star': doc['user_star'],
+                'reviewer_star': doc['reviewer_star'],
+                'release': doc['release'],
+            }
+        },
+        upsert=True
+    )
+
+    # content > div.article > div > div.lst_wrap > ul > li:nth-child(1) > dl > dt > span
+    # content > div.article > div > div.lst_wrap > ul > li:nth-child(2) > dl > dt > span
+
+    # 또 다른 중복체크 방법
+    # if db.movies.find_one(doc):
+    #     continue
+    # db.movies.insert_one(doc) # DB 최신데이타 등록
