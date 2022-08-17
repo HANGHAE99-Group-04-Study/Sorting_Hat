@@ -31,22 +31,22 @@
         ul{
             font-size: 0;
         }
-        ul > li{
+        li{
             display: inline-block;
             vertical-align: top;
             width: 25%;
         }
-        ul > li > a{
+        li > a{
             display: block;
             width: auto;
             text-decoration: none;
             margin: 5px;
         }
-        ul > li > a .screen{
+        li > a .screen{
             position: relative;
             overflow: hidden;
         }
-        ul > li > a .screen .top{
+        li > a .screen .top{
             position: absolute;
             bottom: 150%;
             left: 30px;
@@ -56,7 +56,7 @@
             font-weight: bold;
 
         }
-        ul > li > a .screen .middle{
+        li > a .screen .middle{
             position: absolute;
             top: 150%;
             left: 30px;
@@ -65,7 +65,7 @@
             font-size: 12px;
 
         }
-        ul > li > a .screen .bottom{
+        li > a .screen .bottom{
             position: absolute;
             top: 150%;
             left: 30px;
@@ -75,21 +75,21 @@
 
 
         }
-        ul > li > a .screen img{
+        li > a .screen img{
             width: 100%;
         }
 
-        ul > li > a:hover .top {
+        li > a:hover .top {
             bottom: 52%;
         }
-        ul > li > a:hover .middle {
+        li > a:hover .middle {
             top: 52%;
         }
-        ul > li > a:hover .bottom {
+        li > a:hover .bottom {
             top: 60%;
         }
 
-        ul > li > a .screen::after{
+        li > a .screen::after{
             content:'';
             display: block;
             position: absolute;
@@ -102,7 +102,7 @@
             opacity: 0;
             transition: all .35s;
         }
-        ul > li > a:hover .screen::after{
+        li > a:hover .screen::after{
             opacity: 1;
         }
 
@@ -129,7 +129,41 @@
         */
     </style>
     <script>
+        $(document).ready(function(){
+          listing();
+        });
+        function listing() {
+            $('#movielist').empty()
+            $.ajax({
+                type: 'GET',
+                url: '/showing/update',
+                data: {},
+                success: function (response) {
+                    let rows = response['movies']
+                    for (let i = 0; i < rows.length; i++) {
+                        let image = rows[i]['image']
+                        let title = rows[i]['title']
+                        let age = rows[i]['age']
+                        let user_star = rows[i]['user_star']
+                        let reviewer_star = rows[i]['reviewer_star']
+                        let release = rows[i]['release']
+                        {#let comment = rows[i]['comment']#}
 
+                        let temp_html = `<li>
+                                            <a href="">
+                                                <div class="screen">
+                                                    <div class="top">${title}</div>
+                                                    <div class="middle">${user_star} ${reviewer_star}</div>
+                                                    <div class="bottom">${release}</div>
+                                                    <img src=${image}>
+                                                </div>
+                                            </a>
+                                        </li>`
+                        $('#movielist').append(temp_html)
+                    }
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -148,89 +182,7 @@
     <div class="wrap-p">
         <p>현재상영작</p>
     </div>
-    <div class="movielist">
-        <ul>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">제목이 들어갑니다.</div>
-                        <div class="middle">평점이 들어갑니다.</div>
-                        <div class="bottom">개봉일이 들어갑니다.</div>
-                        <img src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg">
-                    </div>
-                </a>
-            </li>
-        </ul>
+    <div id="movielist">
     </div>
     <!-- 상영작 끝 -->
 
