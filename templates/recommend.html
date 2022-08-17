@@ -8,7 +8,7 @@
     <link href="../static/head-bar.css" rel="stylesheet">
 
     <style>
-        a{
+        a {
             /*임시*/
             text-decoration: none;
             color: white;
@@ -16,8 +16,8 @@
 
         html, body {
             background-color: black;
-            color:white;
-            font-size:14px;
+            color: white;
+            font-size: 14px;
             width: 100%;
             height: 100%;
         }
@@ -34,14 +34,15 @@
             top: 50%;
             transform: translate(-50%, -50%);
 
-            width:300px;
-            height:300px;
+            width: 300px;
+            height: 300px;
 
             text-align: center;
         }
+
         .wrap-age > input {
             background-color: transparent;
-            color:white;
+            color: white;
             border-style: solid;
             border-radius: 5px;
             border-color: white;
@@ -71,6 +72,7 @@
             margin-right: auto;
             position: relative;
         }
+
         .poster .poster-thumbnail {
             width: 100%;
             height: 100%;
@@ -78,10 +80,12 @@
             image-rendering: smooth;
             filter: brightness(0.5);
         }
-        .poster .poster-thumbnail:hover{
+
+        .poster .poster-thumbnail:hover {
             filter: brightness(1);
         }
-        .poster .stamp{
+
+        .poster .stamp {
 
             display: none;
         }
@@ -111,7 +115,56 @@
 
         .section_temp {
             position: absolute;
-            top: 300px;
+            top: 400px;
+        }
+
+        .btn {
+            position: relative;
+            border: none;
+            min-width: 400px;
+            min-height: 50px;
+            background: darkmagenta;
+            color: whitesmoke;
+            border-radius: 1000px;
+            cursor: pointer;
+            font-weight: bolder;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.2);
+        }
+
+        .btn:hover::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            border: 6px solid #FC71FF;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ring 1.5s infinite;
+        }
+
+        @keyframes ring {
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            100% {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+
+        button {
+            left: 515px;
+            top: 130px;
         }
     </style>
 
@@ -151,7 +204,7 @@
         // END Wheel 동작 입력받아 페이지 이동
 
         // START AGE입력
-        function enter_age(){
+        function enter_age() {
             if (event.keyCode == '13') {
                 let val_age;
                 val_age = document.getElementById('id_input_age').value;
@@ -167,11 +220,11 @@
                 $('#id_input_age').hide();
                 $('#id_age').text(val_age);
 
-                if( val_age >= 18){
+                if (val_age >= 18) {
                     num_pickRate = 3;
-                } else if(val_age >= 15) {
+                } else if (val_age >= 15) {
                     num_pickRate = 2;
-                } else if(val_age >= 12) {
+                } else if (val_age >= 12) {
                     num_pickRate = 1;
                 } else {
                     num_pickRate = 0;
@@ -180,67 +233,68 @@
                 console.log('num_pickRate : ' + num_pickRate);
             }
         }
+
         // END AGE입력
 
         // START 좋아하거나 관심있는 MOVIE 선택
         let arr_movies = [];
         arr_movies[0] = {
-            name:'명량',
-            genre: ['액션','드라마'],
+            name: '명량',
+            genre: ['액션', '드라마'],
             img_url: 'https://movie-phinf.pstatic.net/20140721_186/1405911310756Tt2X1_JPEG/movie_image.jpg'
         }
         arr_movies[1] = {
-            name:'해리 포터와 마법사의 돌',
-            genre: ['판타지','가족', '모험', '액션'],
+            name: '해리 포터와 마법사의 돌',
+            genre: ['판타지', '가족', '모험', '액션'],
             img_url: 'https://movie-phinf.pstatic.net/20181019_236/1539926790655oHv5z_JPEG/movie_image.jpg'
         }
         arr_movies[2] = {
-            name:'타이타닉',
+            name: '타이타닉',
             genre: ['멜로/로맨스', '드라마'],
             img_url: 'https://movie-phinf.pstatic.net/20181129_107/1543452551390CN9TW_JPEG/movie_image.jpg'
         }
         arr_movies[3] = {
-            name:'추격자',
+            name: '추격자',
             genre: ['범죄', '스릴러', '액션'],
             img_url: 'https://movie-phinf.pstatic.net/20111223_156/1324566721937R1fPE_JPEG/movie_image.jpg'
         }
         arr_movies[4] = {
-            name:'인터스텔라',
+            name: '인터스텔라',
             genre: ['SF'],
             img_url: 'https://movie-phinf.pstatic.net/20160106_138/1452044846608eaFcJ_JPEG/movie_image.jpg'
         }
         arr_movies[5] = {
-            name:'극한직업',
+            name: '극한직업',
             genre: ['코미디'],
             img_url: 'https://movie-phinf.pstatic.net/20190116_206/1547615429111dINWj_JPEG/movie_image.jpg'
         }
         arr_movies[6] = {
-            name:'겨울왕국',
+            name: '겨울왕국',
             genre: ['애니메이션', '모험', '코미디', '가족', '판타지', '뮤지컬'],
             img_url: 'https://movie-phinf.pstatic.net/20170418_82/1492496178995pHxdA_JPEG/movie_image.jpg'
         }
         arr_movies[7] = {
-            name:'컨저링',
-            genre: ['공포','스릴러'],
+            name: '컨저링',
+            genre: ['공포', '스릴러'],
             img_url: 'https://movie-phinf.pstatic.net/20130902_93/1378099837014UAvor_JPEG/movie_image.jpg'
         }
         arr_movies[8] = {
-            name:'기생충',
+            name: '기생충',
             genre: ['드라마'],
             img_url: 'https://movie-phinf.pstatic.net/20190528_36/1559024198386YVTEw_JPEG/movie_image.jpg'
         }
         arr_movies[9] = {
-            name:'보헤미안 랩소디',
+            name: '보헤미안 랩소디',
             genre: ['드라마'],
             img_url: 'https://movie-phinf.pstatic.net/20181213_264/1544692854634ss65r_JPEG/movie_image.jpg'
         }
         arr_movies[10] = {
-            name:'어벤져스:엔드게임',
+            name: '어벤져스:엔드게임',
             genre: ['액션', 'SF'],
             img_url: 'https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg'
         }
         arr_movies[11] = {
-            name:'포레스트 검프',
+            name: '포레스트 검프',
             genre: ['드라마', '코미디'],
             img_url: 'https://movie-phinf.pstatic.net/20160901_187/1472711688297YP2jH_JPEG/movie_image.jpg'
         }
@@ -263,36 +317,37 @@
 
         function putOn_movie(num) {
             arr_pickMovies.push(num);
-            document.getElementById('movie_'+num).className = 'picked-poster';
+            document.getElementById('movie_' + num).className = 'picked-poster';
             console.log(arr_pickMovies);
         }
 
         function putDown_movie(num) {
-            if(!(arr_pickMovies.indexOf(num) == -1)) {
+            if (!(arr_pickMovies.indexOf(num) == -1)) {
                 arr_pickMovies.splice(arr_pickMovies.indexOf(num), 1);
-                document.getElementById('movie_'+num).className = 'poster';
+                document.getElementById('movie_' + num).className = 'poster';
             }
         }
 
-        function pick_movie(num_movie){
-            if( arr_pickMovies.indexOf(num_movie) == -1) {
-            // 이미 선택된 영화가 아닐 경우
-                if(arr_pickMovies.length >= 2){
-                // 이미 2개가 모두 선택된 경우
+        function pick_movie(num_movie) {
+            if (arr_pickMovies.indexOf(num_movie) == -1) {
+                // 이미 선택된 영화가 아닐 경우
+                if (arr_pickMovies.length >= 2) {
+                    // 이미 2개가 모두 선택된 경우
                     alert('이미 두개를 선택하셨습니다.');
                 } else {
-                // 선택이 가능한 경우
+                    // 선택이 가능한 경우
                     putOn_movie(num_movie);
                 }
             } else {
-            // 이미 선택된 영화일 경우
+                // 이미 선택된 영화일 경우
                 putDown_movie(num_movie);
             }
         }
+
         // END 좋아하거나 관심있는 MOVIE 선택
 
-        function check_input(){
-            if(num_pickRate < 0 || num_pickRate > 3){
+        function check_input() {
+            if (num_pickRate < 0 || num_pickRate > 3) {
                 alert('나이를 입력해주세요');
 
                 page = 1;
@@ -301,7 +356,7 @@
                 return false;
             }
 
-            if(arr_pickMovies.length < 2){
+            if (arr_pickMovies.length < 2) {
                 alert('영화를 선택해주세요.');
 
                 page = 2;
@@ -325,6 +380,7 @@
                 }
             }
         }
+
         function calc_movie() {
             if (!check_input())
                 return;
@@ -335,43 +391,153 @@
     </script>
 </head>
 <body>
-    <!-- START HEAD BAR -->
-    <div class="head-bar">
-        <h1>SORTING HAT</h1>
-        <div class="hat-box"></div>
-        <a href="recommend">영화추천</a>
-        <a href="showing">현재상영작</a>
-        <a href="schedule">상영예정작</a>
-    </div>
-    <!-- END HEAD BAR-->
+<!-- START HEAD BAR -->
+<div class="head-bar">
+    <h1>SORTING HAT</h1>
+    <div class="hat-box"></div>
+    <a href="recommend">영화추천</a>
+    <a href="showing">현재상영작</a>
+    <a href="schedule">상영예정작</a>
+</div>
+<!-- END HEAD BAR-->
 
-    <!--START : 나이 질문 -->
-    <div class="section" id="section_age">
-        <div class="wrap-age">
-            <p>나이를 입력해주세요.</p>
-            <input type="text" maxlength="2" id="id_input_age" onkeyup="enter_age()">
-            <p id="id_age"></p>
+<!--START : 나이 질문 -->
+<div class="section" id="section_age">
+    <div class="wrap-age">
+        <p>나이를 입력해주세요.</p>
+        <input type="text" maxlength="2" id="id_input_age" onkeyup="enter_age()">
+        <p id="id_age"></p>
+    </div>
+</div>
+<!--END : 나이 질문 -->
+
+<!--START : 좋아하는 영화 질문 -->
+<div class="section" id="section_movie">
+    <div class="wrap-movie-question">
+        <div class="wrap-movies" id="wrap_movie_top">
+        </div>
+        <p>재미있게 본 혹은 관심있는 영화를 2개 선택해주세요.</p>
+        <div class="wrap-movies" id="wrap_movie_bottom">
         </div>
     </div>
-    <!--END : 나이 질문 -->
+</div>
+<!--END : 좋아하는 영화 질문 -->
 
-    <!--START : 좋아하는 영화 질문 -->
-    <div class="section" id="section_movie">
-        <div class="wrap-movie-question">
-            <div class="wrap-movies" id="wrap_movie_top">
-            </div>
-            <p>재미있게 본 혹은 관심있는 영화를 2개 선택해주세요.</p>
-            <div class="wrap-movies" id="wrap_movie_bottom">
-            </div>
-        </div>
-    </div>
-    <!--END : 좋아하는 영화 질문 -->
+<!--START : 동행인 질문 -->
+<div class="section" id="section_with">
+    <style>
+        .box1 {
+            position: absolute;
 
-    <div class="section" id="section_with">
-        <div class="section_temp">
-            <a href="#" onclick="calc_movie(); return false;">결과</a>
-        </div>
+            width: 600px;
+            height: 330px;
+            left: 115px;
+            top: 400px;
+
+            background: #AB00FC;
+        }
+
+        .box2 {
+            position: absolute;
+
+            width: 600px;
+            height: 330px;
+            top: 400px;
+            right: 115px;
+
+            background: #FC71FF;
+        }
+
+        .box3 {
+            position: absolute;
+            width: 600px;
+            height: 330px;
+            left: 115px;
+            top: 768px;
+
+            background: #4B5DFF;
+        }
+
+        .box4 {
+            position: absolute;
+            width: 600px;
+            height: 330px;
+            right: 115px;
+            top: 768px;
+
+            background: #FFF854;
+        }
+
+        .text {
+            position: absolute;
+
+            left: 640px;
+            top: 741px;
+        }
+
+        .con1 {
+            position: absolute;
+            width: 300px;
+            height: 240px;
+            left: 290px;
+            top: 453px;
+            background-size: 240px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
+        }
+
+        .con2 {
+            position: absolute;
+            width: 250px;
+            height: 260px;
+            right: 290px;
+            top: 441px;
+            background-size: 260px;
+            background-image: url("https://s3-alpha-sig.figma.com/img/0878/3088/d4b50ef1a00ad67ebffef328c7d7a4fa?Expires=1661126400&Signature=heeEuEXAXlipfv38VxIZou1NAsTxRN-aoUKV9L3bmXLDotCyoedMrMvBekxDJZ8ZDLPo5rMffSTuvZPXkAIZSTWy1lSx-1vaC6F~GJfV1ZIS5TZul9qClFbNIgv7hc2CsdG9QRuWrk1WWaAAhYfL8QCrvWNsKSvSucZ3~Xetbbg4pSMYJFFfUo1kLJU9lBW17L6a40-qQjt017qKY97IBvLvo7Bab22z5ta3Chyi~5sx0xHyaLtWm8ApGjc9sMqvma-9JYazryg8tL-gcD1xhuyyDHOMstUZAiCjCkc22sUdDkicn~QMolECsMKXehP0DJ6aG~mn1biY95vhYfCyPQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+        }
+
+        .con3 {
+            position: absolute;
+            width: 250px;
+            height: 280px;
+            left: 290px;
+            top: 818px;
+            background-image: url("https://s3-alpha-sig.figma.com/img/4c2b/62d7/5adc2d36914d9d128872a8fce7f32d81?Expires=1661126400&Signature=Iu9TPp-FEt0nkw4b4LRxjn2fV44lsqQnc6xGPxb-934yPbdrxUUBtsGvDUVaH7wS1RBRhQv6U4R4raRwgP6BrFbXxMybYIQwkEaVxnXVmcs7RpqooKJKz2F0MEEf1C~l9Ij5GSGne6dbXxg54a3VNmHJwVeXNJPFphwNYIcoazaet82lUPfK-3gZWkg8sJfmbkhlhg-wVwDfZKlM5oFRAbVY6fOoLJXUY38pr1W7zRwDYB8038ruFnNeKpjfKU3ppDTlD4JR4BlzMRW~EiXPVMRNkHZbgBTIYEToUdfhQ0-jOtiWEItYkXJBQ9outc8M-wPNaXCm7Kkj9blusEhe0Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+            background-size: 260px;
+        }
+
+        .con4 {
+            position: absolute;
+            width: 270px;
+            height: 300px;
+            right: 280px;
+            top: 818px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
+            background-size: 280px;
+        }
+
+    </style>
+    </head>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4"></div>
+    <div class="text">같이 보러 가는 사람이 있나요?</div>
+    <div class="con1"></div>
+    <div class="con2"></div>
+    <div class="con3"></div>
+    <div class="con4"></div>
+</div>
+<!--END : 동행인 질문 -->
+
+<div class="section" id="section_with">
+    <div class="section_temp">
+        <a href="#" onclick="calc_movie(); return false;">
+            <button class="btn" type="button">
+                맞춤 영화 찾아보기
+            </button>
+        </a>
     </div>
+</div>
 </body>
 </html>
 
