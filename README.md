@@ -18,3 +18,7 @@
 
 #### DB 업데이트 상태
 [![상영작 불러오기](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml/badge.svg)](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml)
+
+<img width="344" alt="image" src="https://user-images.githubusercontent.com/5901912/185542949-8110b92a-08e6-4691-bd6b-9194e4958b6e.png">
+
+[DB정보](https://www.erdcloud.com/d/dGWvPskqoKi6q3Mkp)
