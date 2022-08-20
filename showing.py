@@ -19,6 +19,7 @@ soup = BeautifulSoup(data.text, 'html.parser')
 movies = soup.select('#content > div.article > div > div.lst_wrap > ul > li')
 
 # db.movies.drop() # DB movie 컬렉션 삭제
+db.movies.update_many( {}, {"$set": { 'showing' : False}}) # DB에 있는 전체 영화 상영여부 False로 변환
 
 # movies (li들) 의 반복문을 돌리기
 for movie in movies:
@@ -51,6 +52,7 @@ for movie in movies:
     except Exception as e:
         c_r_star = '0.00'
     c_release = re.search(r'\d{3,4}.*.봉', movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2)').text).group() # 개봉일
+    c_showing = True
 
     doc = {
         'id' : c_id,
@@ -60,7 +62,8 @@ for movie in movies:
         'genre' : c_genre,
         'user_star': c_n_star,
         'reviewer_star': c_r_star,
-        'release': c_release
+        'release': c_release,
+        'showing': c_showing,
     }
     db.movies.update_one(
         {'_id': doc['id']},
@@ -74,9 +77,20 @@ for movie in movies:
                 'user_star': doc['user_star'],
                 'reviewer_star': doc['reviewer_star'],
                 'release': doc['release'],
-            }
+                'showing': doc['showing']
+            },
         },
         upsert=True
+    )
+    db.movies.update_one(
+        {'_id': doc['id']},
+        {
+            "$set": {
+                'showing': doc['showing'],
+                'user_star': doc['user_star'],
+                'reviewer_star': doc['reviewer_star']
+            },
+        }
     )
 
     # 또 다른 중복체크 방법
