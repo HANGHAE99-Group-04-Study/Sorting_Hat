@@ -1,0 +1,19 @@
+.DPbox {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+/* 1500 * 2137   1:1.425*/
+.DPimg {
+  margin: 0px 2% 0px 0px;
+  width: 20%;
+  height: 28.5%;
+  cursor: pointer;
+}
+
+.cur-box {
+  position: relative;
+  top: 80px;
+  left: 50px;
+}
