@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 app = Flask(__name__)
 
@@ -29,6 +29,18 @@ def showing():
 def showing_get():
     movies_list = list(db.movies.find({}, {'_id': False}))
     return jsonify({'movies':movies_list})
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+@app.get('/shutdown')
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0',port=5000,debug=True)
