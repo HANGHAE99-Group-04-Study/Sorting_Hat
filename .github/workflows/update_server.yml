@@ -34,6 +34,6 @@ jobs:
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script:
-            curl http://127.0.0.1:5000/shutdown
+            kill $(pgrep -f python3)
             cd ${{ secrets.SERVER_WEB_PATH }} && git pull
             python3 app.py
