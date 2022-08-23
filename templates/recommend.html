@@ -26,6 +26,7 @@
             width: 100%;
             height: 100%;
             position: relative;
+            background-color: red;
         }
 
         .wrap-age {
@@ -113,13 +114,11 @@
             height: 80px;
         }
 
-        .section_temp {
-            position: absolute;
-            top: 400px;
-        }
-
         .btn {
             position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
             border: none;
             min-width: 400px;
             min-height: 50px;
@@ -132,7 +131,9 @@
         }
 
         .btn:hover {
-            transform: scale(1.2);
+            top: 50%;
+            left: 50%;
+            transform: scale(1.2) translate(-40%, -40%);
         }
 
         .btn:hover::after {
@@ -164,13 +165,14 @@
 
         button {
             left: 515px;
-            top: 130px;
+            top: -40px;
         }
     </style>
 
     <script>
         let num_pickRate = -1;
         let arr_pickGenre = [];
+        let num_pickWith = -1;
 
         // page 로딩되었을 때 실행되는 함수
         $(document).ready(function () {
@@ -192,7 +194,7 @@
         $(window).on("wheel", function (e) {
             if (mHtml.is(":animated")) return;
             if (e.originalEvent.deltaY > 0) {
-                if (page == 3) return;
+                if (page == 4) return;
                 page++;
             } else if (e.originalEvent.deltaY < 0) {
                 if (page == 1) return;
@@ -236,7 +238,7 @@
 
         // END AGE입력
 
-        // START 좋아하거나 관심있는 MOVIE 선택
+        // START : 좋아하거나 관심있는 영화 선택
         let arr_movies = [];
         arr_movies[0] = {
             name: '명량',
@@ -344,7 +346,15 @@
             }
         }
 
-        // END 좋아하거나 관심있는 MOVIE 선택
+        // END : 좋아하거나 관심있는 영화 선택
+
+        // START : 동행인선택
+        // num_with 0 : 혼자, 1 : 커플, 2 : 친구, 3 : 가족
+        function pick_with(num_with) {
+            num_pickWith = num_with;
+        }
+
+        // END : 동행인선택
 
         function check_input() {
             if (num_pickRate < 0 || num_pickRate > 3) {
@@ -360,6 +370,15 @@
                 alert('영화를 선택해주세요.');
 
                 page = 2;
+                var posTop = (page - 1) * $(window).height();
+                mHtml.animate({scrollTop: posTop});
+                return false;
+            }
+
+            if (num_pickWith < 0 || num_pickWith > 4) {
+                alert('같이 보러갈 사람을 선택해주세요.');
+
+                page = 3;
                 var posTop = (page - 1) * $(window).height();
                 mHtml.animate({scrollTop: posTop});
                 return false;
@@ -432,7 +451,7 @@
             width: 600px;
             height: 330px;
             left: 115px;
-            top: 400px;
+            top: 280px;
 
             background: #AB00FC;
         }
@@ -442,7 +461,7 @@
 
             width: 600px;
             height: 330px;
-            top: 400px;
+            top: 280px;
             right: 115px;
 
             background: #FC71FF;
@@ -453,7 +472,7 @@
             width: 600px;
             height: 330px;
             left: 115px;
-            top: 768px;
+            top: 648px;
 
             background: #4B5DFF;
         }
@@ -463,7 +482,7 @@
             width: 600px;
             height: 330px;
             right: 115px;
-            top: 768px;
+            top: 648px;
 
             background: #FFF854;
         }
@@ -472,7 +491,7 @@
             position: absolute;
 
             left: 640px;
-            top: 741px;
+            top: 621px;
         }
 
         .con1 {
@@ -480,7 +499,7 @@
             width: 300px;
             height: 240px;
             left: 290px;
-            top: 453px;
+            top: 333px;
             background-size: 240px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
         }
@@ -490,9 +509,9 @@
             width: 250px;
             height: 260px;
             right: 290px;
-            top: 441px;
+            top: 321px;
             background-size: 260px;
-            background-image: url("https://s3-alpha-sig.figma.com/img/0878/3088/d4b50ef1a00ad67ebffef328c7d7a4fa?Expires=1661126400&Signature=heeEuEXAXlipfv38VxIZou1NAsTxRN-aoUKV9L3bmXLDotCyoedMrMvBekxDJZ8ZDLPo5rMffSTuvZPXkAIZSTWy1lSx-1vaC6F~GJfV1ZIS5TZul9qClFbNIgv7hc2CsdG9QRuWrk1WWaAAhYfL8QCrvWNsKSvSucZ3~Xetbbg4pSMYJFFfUo1kLJU9lBW17L6a40-qQjt017qKY97IBvLvo7Bab22z5ta3Chyi~5sx0xHyaLtWm8ApGjc9sMqvma-9JYazryg8tL-gcD1xhuyyDHOMstUZAiCjCkc22sUdDkicn~QMolECsMKXehP0DJ6aG~mn1biY95vhYfCyPQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
         }
 
         .con3 {
@@ -500,8 +519,8 @@
             width: 250px;
             height: 280px;
             left: 290px;
-            top: 818px;
-            background-image: url("https://s3-alpha-sig.figma.com/img/4c2b/62d7/5adc2d36914d9d128872a8fce7f32d81?Expires=1661126400&Signature=Iu9TPp-FEt0nkw4b4LRxjn2fV44lsqQnc6xGPxb-934yPbdrxUUBtsGvDUVaH7wS1RBRhQv6U4R4raRwgP6BrFbXxMybYIQwkEaVxnXVmcs7RpqooKJKz2F0MEEf1C~l9Ij5GSGne6dbXxg54a3VNmHJwVeXNJPFphwNYIcoazaet82lUPfK-3gZWkg8sJfmbkhlhg-wVwDfZKlM5oFRAbVY6fOoLJXUY38pr1W7zRwDYB8038ruFnNeKpjfKU3ppDTlD4JR4BlzMRW~EiXPVMRNkHZbgBTIYEToUdfhQ0-jOtiWEItYkXJBQ9outc8M-wPNaXCm7Kkj9blusEhe0Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+            top: 698px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
             background-size: 260px;
         }
 
@@ -510,17 +529,17 @@
             width: 270px;
             height: 300px;
             right: 280px;
-            top: 818px;
+            top: 698px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
             background-size: 280px;
         }
 
     </style>
     </head>
-    <div class="box1"></div>
-    <div class="box2"></div>
-    <div class="box3"></div>
-    <div class="box4"></div>
+    <div class="box1" onclick="pick_with(0)"></div>
+    <div class="box2" onclick="pick_with(1)"></div>
+    <div class="box3" onclick="pick_with(2)"></div>
+    <div class="box4" onclick="pick_with(3)"></div>
     <div class="text">같이 보러 가는 사람이 있나요?</div>
     <div class="con1"></div>
     <div class="con2"></div>
@@ -529,14 +548,10 @@
 </div>
 <!--END : 동행인 질문 -->
 
-<div class="section" id="section_with">
-    <div class="section_temp">
-        <a href="#" onclick="calc_movie(); return false;">
-            <button class="btn" type="button">
-                맞춤 영화 찾아보기
-            </button>
-        </a>
-    </div>
+<div class="section">
+    <button class="btn" type="button" onclick="calc_movie(); return false;">
+        맞춤 영화 찾아보기
+    </button>
 </div>
 </body>
 </html>
