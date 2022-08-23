@@ -5,9 +5,9 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-#   pull_request:
-#     types: [closed]
-#     branches: [ "main" ]
+  pull_request:
+    types: [closed]
+    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,7 +34,4 @@ jobs:
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script:
-            whoami
-            kill $(pgrep -f python3)
-            cd ${{ secrets.SERVER_WEB_PATH }} && git pull
-            python3 app.py
+            ./update.sh
