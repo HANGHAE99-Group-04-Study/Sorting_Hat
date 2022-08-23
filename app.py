@@ -25,7 +25,7 @@ def scadule():
 def showing():
     return render_template('showing.html')
 
-@app.route('/showing/update', methods=["GET"])
+@app.route('/update', methods=["GET"])
 def showing_get():
     movies_list = list(db.movies.find({}, {'_id': False}))
     return jsonify({'movies':movies_list})
