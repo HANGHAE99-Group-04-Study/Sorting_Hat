@@ -17,6 +17,29 @@ def home():
 def recommend():
     return render_template('recommend.html')
 
+@app.route('/recommend/calc', methods=["POST"])
+def recommend_calc():
+    movies_list = list(db.movies.find({'showing': 1}, {'_id': False}).sort('reviewer_star', -1))
+    rate_receive = int(request.form['give_rate'])
+    genre_receive = request.form.getlist('give_genre[]')
+
+    print(genre_receive, rate_receive)
+
+    for movie in movies_list:
+        print(movie)
+        if movie['age'] == '청소년 관람불가' and rate_receive < 3:
+            continue
+        elif movie['age'] == '15세 관람가' and rate_receive < 2:
+            continue
+        elif movie['age'] == '12세 관람가' and rate_receive < 1:
+            continue
+        else:
+            for m_genre in movie['genre']:
+                if genre_receive.count(m_genre) >= 1:
+                    print(movie['title'])
+                    return render_template('result.html', r_title=movie['title'])
+            return render_template('noresult.html')
+
 @app.route('/schedule')
 def scadule():
     return render_template('schedule.html')

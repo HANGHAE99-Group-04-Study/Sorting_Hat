@@ -26,7 +26,6 @@
             width: 100%;
             height: 100%;
             position: relative;
-            background-color: red;
         }
 
         .wrap-age {
@@ -163,10 +162,10 @@
             }
         }
 
-        button {
-            left: 515px;
-            top: -40px;
-        }
+        /*button {*/
+        /*    left: 515px;*/
+        /*    top: -40px;*/
+        /*}*/
     </style>
 
     <script>
@@ -292,12 +291,14 @@
         }
         arr_movies[10] = {
             name: '어벤져스:엔드게임',
-            genre: ['액션', 'SF'],
+            // genre: ['액션', 'SF'],
+            genre: ['세상에 없던 장르1'],
             img_url: 'https://movie-phinf.pstatic.net/20190417_250/1555465284425i6WQE_JPEG/movie_image.jpg'
         }
         arr_movies[11] = {
             name: '포레스트 검프',
-            genre: ['드라마', '코미디'],
+            // genre: ['드라마', '코미디'],
+            genre: ['세상에 없던 장르2'],
             img_url: 'https://movie-phinf.pstatic.net/20160901_187/1472711688297YP2jH_JPEG/movie_image.jpg'
         }
 
@@ -322,14 +323,12 @@
             document.getElementById('movie_' + num).className = 'picked-poster';
             console.log(arr_pickMovies);
         }
-
         function putDown_movie(num) {
             if (!(arr_pickMovies.indexOf(num) == -1)) {
                 arr_pickMovies.splice(arr_pickMovies.indexOf(num), 1);
                 document.getElementById('movie_' + num).className = 'poster';
             }
         }
-
         function pick_movie(num_movie) {
             if (arr_pickMovies.indexOf(num_movie) == -1) {
                 // 이미 선택된 영화가 아닐 경우
@@ -345,7 +344,6 @@
                 putDown_movie(num_movie);
             }
         }
-
         // END : 좋아하거나 관심있는 영화 선택
 
         // START : 동행인선택
@@ -386,7 +384,6 @@
 
             return true;
         }
-
         function calc_genre() {
             arr_pickGenre = [];
             for (let i = 0; i < arr_pickMovies.length; i++) {
@@ -398,18 +395,35 @@
                     }
                 }
             }
+
+            if (num_pickWith == 1 && arr_pickGenre.indexOf('멜로/로맨스') == -1) {
+                arr_pickGenre.push('멜로/로맨스');
+            }
         }
 
         function calc_movie() {
             if (!check_input())
                 return;
-
             calc_genre();
-            console.log(arr_pickGenre);
+            if (num_pickWith == 3) {
+                num_pickRate = 0;
+            }
+            console.log('Genre: ' + arr_pickGenre);
+            console.log('Rate: ' + num_pickRate);
+
+            $.ajax({
+                type: "POST",
+                url: "/recommend/calc",
+                data: { give_genre: arr_pickGenre, give_rate: num_pickRate },
+                success: function (response) {
+                    document.write(response)
+                }
+            })
         }
     </script>
 </head>
 <body>
+
 <!-- START HEAD BAR -->
 <div class="head-bar">
     <h1>SORTING HAT</h1>
@@ -502,6 +516,7 @@
             top: 333px;
             background-size: 240px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
+            pointer-events: none;
         }
 
         .con2 {
@@ -512,6 +527,7 @@
             top: 321px;
             background-size: 260px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
+            pointer-events: none;
         }
 
         .con3 {
@@ -522,6 +538,7 @@
             top: 698px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
             background-size: 260px;
+            pointer-events: none;
         }
 
         .con4 {
@@ -532,6 +549,7 @@
             top: 698px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
             background-size: 280px;
+            pointer-events: none;
         }
 
     </style>
