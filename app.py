@@ -3,7 +3,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 import certifi, requests, os
-client = MongoClient(os.environ.get("MONGO"),tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://Sorting_Hat_Read:Sorting_Hat_Read@cluster0.amhacid.mongodb.net/?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
 
 # movies_list = list(db.movies.find({}, {'_id': False}))
@@ -28,17 +28,20 @@ def recommend_calc():
     for movie in movies_list:
         print(movie)
         if movie['age'] == '청소년 관람불가' and rate_receive < 3:
+            print('1번조건')
             continue
         elif movie['age'] == '15세 관람가' and rate_receive < 2:
+            print('2번조건')
             continue
         elif movie['age'] == '12세 관람가' and rate_receive < 1:
+            print('3번조건')
             continue
         else:
             for m_genre in movie['genre']:
                 if genre_receive.count(m_genre) >= 1:
                     print(movie['title'])
                     return render_template('result.html', r_title=movie['title'])
-            return render_template('noresult.html')
+    return render_template('noresult.html')
 
 @app.route('/schedule')
 def scadule():
