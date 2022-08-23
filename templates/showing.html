@@ -136,7 +136,7 @@
             $('#movielist').empty()
             $.ajax({
                 type: 'GET',
-                url: '/showing/update',
+                url: '/update',
                 data: {},
                 success: function (response) {
                     let rows = response['movies']
