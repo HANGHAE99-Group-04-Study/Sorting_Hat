@@ -141,6 +141,9 @@
                 success: function (response) {
                     let rows = response['movies']
                     for (let i = 0; i < rows.length; i++) {
+                        if(rows[i]['showing'] !== 1){
+                            continue
+                        }
                         let image = rows[i]['image']
                         let title = rows[i]['title']
                         let age = rows[i]['age']
