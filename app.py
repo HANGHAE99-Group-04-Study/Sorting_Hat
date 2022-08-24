@@ -3,7 +3,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 import certifi, requests, os
-client = MongoClient('mongodb+srv://Sorting_Hat_Read:Sorting_Hat_Read@cluster0.amhacid.mongodb.net/?retryWrites=true&w=majority',tlsCAFile=certifi.where())
+client = MongoClient(os.environ.get("MONGO"),tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
 
 # movies_list = list(db.movies.find({}, {'_id': False}))
@@ -53,7 +53,7 @@ def showing():
 
 @app.route('/update', methods=["GET"])
 def showing_get():
-    movies_list = list(db.movies.find({}, {'_id': False}))
+    movies_list = list(db.movies.find({}, {}))
     return jsonify({'movies':movies_list})
 
 def shutdown_server():
