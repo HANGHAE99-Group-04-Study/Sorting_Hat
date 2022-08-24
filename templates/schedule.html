@@ -18,42 +18,48 @@
     <style>
         body {
             background-color: black;
-            color:white;
-            font-size:14px;
+            color: white;
+            font-size: 14px;
         }
-        .wrap-p{
+
+        .wrap-p {
             font-size: 20px;
             max-width: 1410px;
             width: 100%;
             margin: 0 auto;
 
 
-
         }
-        .movielist{
+
+        .movielist {
             max-width: 1500px;
             width: 100%;
             margin: 0 auto;
         }
-        ul{
+
+        ul {
             font-size: 0;
         }
-        li{
+
+        li {
             display: inline-block;
             vertical-align: top;
             width: 25%;
         }
-        li > a{
+
+        li > a {
             display: block;
             width: auto;
             text-decoration: none;
             margin: 5px;
         }
-        li > a .screen{
+
+        li > a .screen {
             position: relative;
             overflow: hidden;
         }
-        li > a .screen .top{
+
+        li > a .screen .top {
             position: absolute;
             bottom: 150%;
             left: 30px;
@@ -63,7 +69,8 @@
             font-weight: bold;
 
         }
-        li > a .screen .middle{
+
+        li > a .screen .middle {
             position: absolute;
             top: 150%;
             left: 30px;
@@ -72,7 +79,8 @@
             font-size: 12px;
 
         }
-        li > a .screen .bottom{
+
+        li > a .screen .bottom {
             position: absolute;
             top: 150%;
             left: 30px;
@@ -82,34 +90,38 @@
 
 
         }
-        li > a .screen img{
+
+        li > a .screen img {
             width: 100%;
         }
 
         li > a:hover .top {
             bottom: 52%;
         }
+
         li > a:hover .middle {
             top: 52%;
         }
+
         li > a:hover .bottom {
             top: 60%;
         }
 
-        li > a .screen::after{
-            content:'';
+        li > a .screen::after {
+            content: '';
             display: block;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,.8);
+            background: rgba(0, 0, 0, .8);
             z-index: 1;
             opacity: 0;
             transition: all .35s;
         }
-        li > a:hover .screen::after{
+
+        li > a:hover .screen::after {
             opacity: 1;
         }
 
@@ -138,7 +150,92 @@
     <script>
         $(document).ready(function () {
             listing();
-            console.log(openButton.length)
+            $('.movielist').click(function (e) {
+                var id = e.target.getAttribute('id');
+                $('.con_tx').empty()
+                $.ajax({
+                    type: 'GET',
+                    url: '/update',
+                    data: {},
+                    success: function (response) {
+                        let rows = response['movies'].filter(function (n, i) {
+                            return n._id === id
+                        })
+                        let title = rows[0]['title']
+                        let age = rows[0]['age']
+                        let genre = rows[0]['genre']
+                        let user_star = rows[0]['user_star']
+                        let reviewer_star = rows[0]['reviewer_star']
+                        {#let tx = rows[0]['tx']#}
+                        let release = rows[0]['release']
+                        {#let comment = rows[i]['comment']#}
+
+                        let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
+                                    <pre></pre>
+                                    <hr class="modal_hr" color="#3f3f3f"/>
+                                    <div style="height: 10px"></div>
+                                    <h3>영화 상세 정보</h3>
+                                    <section class="detail_wrap">
+                                        <article id="detail1">
+                                            <span>관람객 평점</span>${user_star}
+                                            <!--<svg style="display: none">
+                                              <defs>
+                                                <symbol id="fivestars">
+                                                  <path
+                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                    fill="#191919"
+                                                    fill-rule="evenodd"
+                                                  />
+                                                  <path
+                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                    fill="#191919"
+                                                    fill-rule="evenodd"
+                                                    transform="translate(24)"
+                                                  />
+                                                  <path
+                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                    fill="#191919"
+                                                    fill-rule="evenodd"
+                                                    transform="translate(48)"
+                                                  />
+                                                  <path
+                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                    fill="#191919"
+                                                    fill-rule="evenodd"
+                                                    transform="translate(72)"
+                                                  />
+                                                  <path
+                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                    fill="#191919"
+                                                    fill-rule="evenodd"
+                                                    transform="translate(96)"
+                                                  />
+                                                </symbol>
+                                              </defs>
+                                            </svg>
+                                            <div class="rating">
+                                              <div class="rating-bg" style="width: 90%"></div>
+                                              <progress class="rating-bg" value="8.52" max="10"></progress>
+                                              <svg><use xlink:href="#fivestars" /></svg>
+                                            </div>-->
+                                            <br/>
+                                            <span>제작국가:</span> &nbsp한국<br/>
+                                            <span>장르:</span> ${genre}<br/>
+                                            <span>감독:</span> &nbsp이정재
+                                        </article>
+                                        <article id="detail2">
+                                            <span>평론가 평점</span> ${reviewer_star}<br/>
+                                            <span>개봉일자:</span> ${release}<br/>
+                                            <span>상영시간:</span> &nbsp125분<br/>
+                                            <span>출연:</span> &nbsp이정재(박평호), 정우성(김정도)
+                                        </article>
+                                    </section>
+                                    <div style="height: 25px"></div>
+                                    <hr class="modal_hr" color="#3f3f3f"/>`
+                        $('.con_tx').append(temp_html)
+                    }
+                })
+            });
         });
 
         function listing() {
@@ -153,6 +250,7 @@
                         if (rows[i]['showing'] !== 2) {
                             continue
                         }
+                        let id = rows[i]['_id']
                         let image = rows[i]['image']
                         let title = rows[i]['title']
                         let age = rows[i]['age']
@@ -163,7 +261,7 @@
 
                         let temp_html = `<li>
                                             <a>
-                                                <div class="screen">
+                                                <div class="screen" id=${id}>
                                                     <div class="top">${title}</div>
                                                     <div class="middle">${user_star} ${reviewer_star}</div>
                                                     <div class="bottom">${release}</div>
@@ -175,6 +273,10 @@
                     }
                 }
             })
+        }
+
+        function test() {
+
         }
     </script>
 </head>
@@ -215,85 +317,7 @@
                 <img class="close_img" src="../static/icon/modal_exit_button.png"/>
             </button>
             <article class="con_tx">
-                <h2 style="font-size: 2.2em">헌트</h2>
-                <pre>
-[조직 내 숨어든 스파이를 색출하라!
-‘사냥꾼’이 될 것인가, ‘사냥감’이 될 것인가!]
 
-망명을 신청한 북한 고위 관리를 통해 정보를 입수한
-안기부 해외팀 ‘박평호’(이정재)와 국내팀 ‘김정도’(정우성)는
-조직 내 숨어든 스파이 ‘동림’ 색출 작전을 시작한다.
-스파이를 통해 일급 기밀사항들이 유출되어 위기를 맞게 되자
-날 선 대립과 경쟁 속, 해외팀과 국내팀은 상대를 용의선상에 올려두고
-조사에 박차를 가한다.
-
-찾아내지 못하면 스파이로 지목이 될 위기의 상황,
-서로를 향해 맹렬한 추적을 펼치던 ‘박평호’와 ‘김정도’는 감춰진 실체에 다가서게 되고,
-마침내 ‘대한민국 1호 암살 작전’이라는 거대한 사건과 직면하게 되는데……
-
-하나의 목표, 두 개의 총구
-의심과 경계 속 두 남자의 신념을 건 작전이 시작된다
-            </pre>
-                <hr class="modal_hr" color="#3f3f3f"/>
-                <div style="height: 10px"></div>
-                <h3>영화 상세 정보</h3>
-                <section class="detail_wrap">
-                    <article id="detail1">
-                        <span>관람객 평점</span> &nbsp
-                        <!--<svg style="display: none">
-                          <defs>
-                            <symbol id="fivestars">
-                              <path
-                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                fill="#191919"
-                                fill-rule="evenodd"
-                              />
-                              <path
-                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                fill="#191919"
-                                fill-rule="evenodd"
-                                transform="translate(24)"
-                              />
-                              <path
-                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                fill="#191919"
-                                fill-rule="evenodd"
-                                transform="translate(48)"
-                              />
-                              <path
-                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                fill="#191919"
-                                fill-rule="evenodd"
-                                transform="translate(72)"
-                              />
-                              <path
-                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                fill="#191919"
-                                fill-rule="evenodd"
-                                transform="translate(96)"
-                              />
-                            </symbol>
-                          </defs>
-                        </svg>
-                        <div class="rating">
-                          <div class="rating-bg" style="width: 90%"></div>
-                          <progress class="rating-bg" value="8.52" max="10"></progress>
-                          <svg><use xlink:href="#fivestars" /></svg>
-                        </div>-->
-                        <br/>
-                        <span>제작국가:</span> &nbsp한국<br/>
-                        <span>장르:</span> &nbsp액션, 드라마<br/>
-                        <span>감독:</span> &nbsp이정재
-                    </article>
-                    <article id="detail2">
-                        <span>평론가 평점</span> &nbsp<br/>
-                        <span>개봉일자:</span> &nbsp2022. 08. 10<br/>
-                        <span>상영시간:</span> &nbsp125분<br/>
-                        <span>출연:</span> &nbsp이정재(박평호), 정우성(김정도)
-                    </article>
-                </section>
-                <div style="height: 25px"></div>
-                <hr class="modal_hr" color="#3f3f3f"/>
             </article>
         </div>
         <div class="cover-bar"></div>
