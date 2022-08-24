@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SORTING HAT:개봉예정작</title>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link href="../static/head-bar.css" rel="stylesheet">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SORTING HAT:영화추천</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+            rel="stylesheet"
+    />
+    <link href="../static/head-bar.css" rel="stylesheet"/>
+    <link href="../static/DP.css" rel="stylesheet"/>
+    <link href="../static/star.css" rel="stylesheet"/>
+    <link href="../static/modal.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 
     <style>
         body {
@@ -129,11 +136,13 @@
         */
     </style>
     <script>
-        $(document).ready(function(){
-          listing();
+        $(document).ready(function () {
+            listing();
+            console.log(openButton.length)
         });
+
         function listing() {
-            $('#movielist').empty()
+            $('.movielist').empty()
             $.ajax({
                 type: 'GET',
                 url: '/update',
@@ -141,7 +150,7 @@
                 success: function (response) {
                     let rows = response['movies']
                     for (let i = 0; i < rows.length; i++) {
-                        if(rows[i]['showing'] !== 2){
+                        if (rows[i]['showing'] !== 2) {
                             continue
                         }
                         let image = rows[i]['image']
@@ -153,7 +162,7 @@
                         {#let comment = rows[i]['comment']#}
 
                         let temp_html = `<li>
-                                            <a href="">
+                                            <a>
                                                 <div class="screen">
                                                     <div class="top">${title}</div>
                                                     <div class="middle">${user_star} ${reviewer_star}</div>
@@ -162,7 +171,7 @@
                                                 </div>
                                             </a>
                                         </li>`
-                        $('#movielist').append(temp_html)
+                        $('.movielist').append(temp_html)
                     }
                 }
             })
@@ -170,24 +179,136 @@
     </script>
 </head>
 <body>
-    <!-- START HEAD BAR -->
-    <div class="head-bar">
-        <h1>SORTING HAT</h1>
-        <div class="hat-box"></div>
-        <a href="recommend">영화추천</a>
-        <a href="showing">현재상영작</a>
-        <a href="schedule">개봉예정작</a>
-    </div>
-    <!-- END HEAD BAR-->
-    <img src="https://blog.kakaocdn.net/dn/cN8Jog/btrG3qjo3d0/YON0Dq2Ic8kJNTKV5V0ntK/img.jpg" width="100%">
+<!-- START HEAD BAR -->
+<header class="head-bar">
+    <h1>SORTING HAT</h1>
+    <div class="hat-box"></div>
+    <a href="recommend">영화추천</a>
+    <a href="showing">현재상영작</a>
+    <a href="schedule">상영예정작</a>
+</header>
+<!-- END HEAD BAR-->
 
-    <!-- 상영작 시작 -->
-    <div class="wrap-p">
-        <p>개봉예정작</p>
-    </div>
-    <div id="movielist">
-    </div>
-    <!-- 상영작 끝 -->
+<section class="cur-box">
+    <h1>상영 예정작</h1>
+    <article class="movielist">
+    </article>
+</section>
 
+<!-- START MODAL-->
+<div id="modal-container" class="modal unstaged">
+    <div class="modal_overlay"></div>
+    <div class="modal_content_wrap">
+        <div class="modal_content">
+            <div class="modal_vid_box">
+                <iframe
+                        class="modal_vid"
+                        src="https://www.youtube.com/embed/CSOb8gia_mg?rel=0&controls=1"
+                        title="[헌트] 공식 예고편"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                ></iframe>
+            </div>
+
+            <button class="close_btn">
+                <img class="close_img" src="../static/icon/modal_exit_button.png"/>
+            </button>
+            <article class="con_tx">
+                <h2 style="font-size: 2.2em">헌트</h2>
+                <pre>
+[조직 내 숨어든 스파이를 색출하라!
+‘사냥꾼’이 될 것인가, ‘사냥감’이 될 것인가!]
+
+망명을 신청한 북한 고위 관리를 통해 정보를 입수한
+안기부 해외팀 ‘박평호’(이정재)와 국내팀 ‘김정도’(정우성)는
+조직 내 숨어든 스파이 ‘동림’ 색출 작전을 시작한다.
+스파이를 통해 일급 기밀사항들이 유출되어 위기를 맞게 되자
+날 선 대립과 경쟁 속, 해외팀과 국내팀은 상대를 용의선상에 올려두고
+조사에 박차를 가한다.
+
+찾아내지 못하면 스파이로 지목이 될 위기의 상황,
+서로를 향해 맹렬한 추적을 펼치던 ‘박평호’와 ‘김정도’는 감춰진 실체에 다가서게 되고,
+마침내 ‘대한민국 1호 암살 작전’이라는 거대한 사건과 직면하게 되는데……
+
+하나의 목표, 두 개의 총구
+의심과 경계 속 두 남자의 신념을 건 작전이 시작된다
+            </pre>
+                <hr class="modal_hr" color="#3f3f3f"/>
+                <div style="height: 10px"></div>
+                <h3>영화 상세 정보</h3>
+                <section class="detail_wrap">
+                    <article id="detail1">
+                        <span>관람객 평점</span> &nbsp
+                        <!--<svg style="display: none">
+                          <defs>
+                            <symbol id="fivestars">
+                              <path
+                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                fill="#191919"
+                                fill-rule="evenodd"
+                              />
+                              <path
+                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                fill="#191919"
+                                fill-rule="evenodd"
+                                transform="translate(24)"
+                              />
+                              <path
+                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                fill="#191919"
+                                fill-rule="evenodd"
+                                transform="translate(48)"
+                              />
+                              <path
+                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                fill="#191919"
+                                fill-rule="evenodd"
+                                transform="translate(72)"
+                              />
+                              <path
+                                d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                fill="#191919"
+                                fill-rule="evenodd"
+                                transform="translate(96)"
+                              />
+                            </symbol>
+                          </defs>
+                        </svg>
+                        <div class="rating">
+                          <div class="rating-bg" style="width: 90%"></div>
+                          <progress class="rating-bg" value="8.52" max="10"></progress>
+                          <svg><use xlink:href="#fivestars" /></svg>
+                        </div>-->
+                        <br/>
+                        <span>제작국가:</span> &nbsp한국<br/>
+                        <span>장르:</span> &nbsp액션, 드라마<br/>
+                        <span>감독:</span> &nbsp이정재
+                    </article>
+                    <article id="detail2">
+                        <span>평론가 평점</span> &nbsp<br/>
+                        <span>개봉일자:</span> &nbsp2022. 08. 10<br/>
+                        <span>상영시간:</span> &nbsp125분<br/>
+                        <span>출연:</span> &nbsp이정재(박평호), 정우성(김정도)
+                    </article>
+                </section>
+                <div style="height: 25px"></div>
+                <hr class="modal_hr" color="#3f3f3f"/>
+            </article>
+        </div>
+        <div class="cover-bar"></div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<script src="../static/modal.js"></script>
 </body>
 </html>
+
+<!--
+  2. 모달 창이 숨겨졌을 때 유튜브 영상도 초기화 STOP 기능
+  3. 모달 창 하단 리뷰 칸 생성
+  !. 네이버 영화예고편을 긁어와보려고 했지만 접속 거부, 그러므로 유튜브 이용해야 함
+  ?. 영화 포스터 클릭하면 해당 영화 상세 페이지를 긁어와야 함
+  ?. 영화 줄거리 ( 단 나눠서 ), 영화 제목/장르/제작국가/개봉일자/상영시간/등급/감독/출연
+-->
