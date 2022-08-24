@@ -150,15 +150,15 @@
     <script>
         $(document).ready(function () {
             listing();
-            $('.movielist').click(function (e) {
-                var id = e.target.getAttribute('id');
+            $('.movielist').click(function (e) { // 상세페이지 불러오기
+                var id = e.target.getAttribute('id'); // 클릭한 곳의 id값 가져오기
                 $('.con_tx').empty()
                 $.ajax({
                     type: 'GET',
                     url: '/update',
                     data: {},
                     success: function (response) {
-                        let rows = response['movies'].filter(function (n, i) {
+                        let rows = response['movies'].filter(function (n, i) { // 해당 아이디 값을 가지고 있는 DB데이터만 필터링
                             return n._id === id
                         })
                         let title = rows[0]['title']
@@ -238,7 +238,7 @@
             });
         });
 
-        function listing() {
+        function listing() { // DB에서 영화 항목 가져오기
             $('.movielist').empty()
             $.ajax({
                 type: 'GET',
