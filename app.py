@@ -1,10 +1,14 @@
+import certifi
+import os
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+
 app = Flask(__name__)
 
-import certifi, requests, os
-client = MongoClient(os.environ.get("MONGO"),tlsCAFile=certifi.where())
+
+client = MongoClient(os.environ.get("MONGO"), tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
+
 
 # movies_list = list(db.movies.find({}, {'_id': False}))
 # print(movies_list)
@@ -13,9 +17,11 @@ db = client.Sorting_Hat_Dev
 def home():
     return render_template('index.html')
 
+
 @app.route('/recommend')
 def recommend():
     return render_template('recommend.html')
+
 
 @app.route('/recommend/calc', methods=["POST"])
 def recommend_calc():
@@ -43,24 +49,29 @@ def recommend_calc():
                     return render_template('result.html', r_title=movie['title'])
     return render_template('noresult.html')
 
+
 @app.route('/schedule')
-def scadule():
+def schedule():
     return render_template('schedule.html')
+
 
 @app.route('/showing')
 def showing():
     return render_template('showing.html')
 
+
 @app.route('/update', methods=["GET"])
 def showing_get():
     movies_list = list(db.movies.find({}, {}))
-    return jsonify({'movies':movies_list})
+    return jsonify({'movies': movies_list})
+
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
+
 
 @app.get('/shutdown')
 def shutdown():
@@ -69,4 +80,4 @@ def shutdown():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0',port=5000,debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
