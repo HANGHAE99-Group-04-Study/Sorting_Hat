@@ -161,6 +161,98 @@
                 opacity: 0;
             }
         }
+                .box1 {
+            position: absolute;
+
+            width: 600px;
+            height: 330px;
+            left: 115px;
+            top: 280px;
+
+            background: #AB00FC;
+        }
+
+        .box2 {
+            position: absolute;
+
+            width: 600px;
+            height: 330px;
+            top: 280px;
+            right: 115px;
+
+            background: #FC71FF;
+        }
+
+        .box3 {
+            position: absolute;
+            width: 600px;
+            height: 330px;
+            left: 115px;
+            top: 648px;
+
+            background: #4B5DFF;
+        }
+
+        .box4 {
+            position: absolute;
+            width: 600px;
+            height: 330px;
+            right: 115px;
+            top: 648px;
+
+            background: #FFF854;
+        }
+
+        .text {
+            position: absolute;
+
+            left: 640px;
+            top: 621px;
+        }
+
+        .con1 {
+            position: absolute;
+            width: 300px;
+            height: 240px;
+            left: 290px;
+            top: 333px;
+            background-size: 240px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
+            pointer-events: none;
+        }
+
+        .con2 {
+            position: absolute;
+            width: 250px;
+            height: 260px;
+            right: 290px;
+            top: 321px;
+            background-size: 260px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
+            pointer-events: none;
+        }
+
+        .con3 {
+            position: absolute;
+            width: 250px;
+            height: 280px;
+            left: 290px;
+            top: 698px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
+            background-size: 260px;
+            pointer-events: none;
+        }
+
+        .con4 {
+            position: absolute;
+            width: 270px;
+            height: 300px;
+            right: 280px;
+            top: 698px;
+            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
+            background-size: 280px;
+            pointer-events: none;
+        }
 
         /*button {*/
         /*    left: 515px;*/
@@ -193,20 +285,20 @@
         $(window).on("wheel", function (e) {
             if (mHtml.is(":animated")) return;
             if (e.originalEvent.deltaY > 0) {
-                if (page == 4) return;
+                if (page === 4) return;
                 page++;
             } else if (e.originalEvent.deltaY < 0) {
-                if (page == 1) return;
+                if (page === 1) return;
                 page--;
             }
-            var posTop = (page - 1) * $(window).height();
+            let posTop = (page - 1) * $(window).height();
             mHtml.animate({scrollTop: posTop});
         })
         // END Wheel 동작 입력받아 페이지 이동
 
         // START AGE입력
         function enter_age() {
-            if (event.keyCode == '13') {
+            if (event.keyCode === 13) {
                 let val_age;
                 val_age = document.getElementById('id_input_age').value;
 
@@ -324,13 +416,13 @@
             console.log(arr_pickMovies);
         }
         function putDown_movie(num) {
-            if (!(arr_pickMovies.indexOf(num) == -1)) {
+            if (!(arr_pickMovies.indexOf(num) === -1)) {
                 arr_pickMovies.splice(arr_pickMovies.indexOf(num), 1);
                 document.getElementById('movie_' + num).className = 'poster';
             }
         }
         function pick_movie(num_movie) {
-            if (arr_pickMovies.indexOf(num_movie) == -1) {
+            if (arr_pickMovies.indexOf(num_movie) === -1) {
                 // 이미 선택된 영화가 아닐 경우
                 if (arr_pickMovies.length >= 2) {
                     // 이미 2개가 모두 선택된 경우
@@ -355,11 +447,11 @@
         // END : 동행인선택
 
         function check_input() {
+            let posTop = (page - 1) * $(window).height();
             if (num_pickRate < 0 || num_pickRate > 3) {
                 alert('나이를 입력해주세요');
 
                 page = 1;
-                var posTop = (page - 1) * $(window).height();
                 mHtml.animate({scrollTop: posTop});
                 return false;
             }
@@ -368,7 +460,6 @@
                 alert('영화를 선택해주세요.');
 
                 page = 2;
-                var posTop = (page - 1) * $(window).height();
                 mHtml.animate({scrollTop: posTop});
                 return false;
             }
@@ -377,7 +468,6 @@
                 alert('같이 보러갈 사람을 선택해주세요.');
 
                 page = 3;
-                var posTop = (page - 1) * $(window).height();
                 mHtml.animate({scrollTop: posTop});
                 return false;
             }
@@ -390,13 +480,13 @@
                 for (let j = 0; j < arr_movies[arr_pickMovies[i]]['genre'].length; j++) {
                     let str_temp = arr_movies[arr_pickMovies[i]]['genre'][j];
 
-                    if (arr_pickGenre.indexOf(str_temp) == -1) {
+                    if (arr_pickGenre.indexOf(str_temp) === -1) {
                         arr_pickGenre.push(str_temp);
                     }
                 }
             }
 
-            if (num_pickWith == 1 && arr_pickGenre.indexOf('멜로/로맨스') == -1) {
+            if (num_pickWith === 1 && arr_pickGenre.indexOf('멜로/로맨스') === -1) {
                 arr_pickGenre.push('멜로/로맨스');
             }
         }
@@ -405,7 +495,7 @@
             if (!check_input())
                 return;
             calc_genre();
-            if (num_pickWith == 3) {
+            if (num_pickWith === 3) {
                 num_pickRate = 0;
             }
             console.log('Genre: ' + arr_pickGenre);
@@ -458,102 +548,6 @@
 
 <!--START : 동행인 질문 -->
 <div class="section" id="section_with">
-    <style>
-        .box1 {
-            position: absolute;
-
-            width: 600px;
-            height: 330px;
-            left: 115px;
-            top: 280px;
-
-            background: #AB00FC;
-        }
-
-        .box2 {
-            position: absolute;
-
-            width: 600px;
-            height: 330px;
-            top: 280px;
-            right: 115px;
-
-            background: #FC71FF;
-        }
-
-        .box3 {
-            position: absolute;
-            width: 600px;
-            height: 330px;
-            left: 115px;
-            top: 648px;
-
-            background: #4B5DFF;
-        }
-
-        .box4 {
-            position: absolute;
-            width: 600px;
-            height: 330px;
-            right: 115px;
-            top: 648px;
-
-            background: #FFF854;
-        }
-
-        .text {
-            position: absolute;
-
-            left: 640px;
-            top: 621px;
-        }
-
-        .con1 {
-            position: absolute;
-            width: 300px;
-            height: 240px;
-            left: 290px;
-            top: 333px;
-            background-size: 240px;
-            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
-            pointer-events: none;
-        }
-
-        .con2 {
-            position: absolute;
-            width: 250px;
-            height: 260px;
-            right: 290px;
-            top: 321px;
-            background-size: 260px;
-            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
-            pointer-events: none;
-        }
-
-        .con3 {
-            position: absolute;
-            width: 250px;
-            height: 280px;
-            left: 290px;
-            top: 698px;
-            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
-            background-size: 260px;
-            pointer-events: none;
-        }
-
-        .con4 {
-            position: absolute;
-            width: 270px;
-            height: 300px;
-            right: 280px;
-            top: 698px;
-            background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
-            background-size: 280px;
-            pointer-events: none;
-        }
-
-    </style>
-    </head>
     <div class="box1" onclick="pick_with(0)"></div>
     <div class="box2" onclick="pick_with(1)"></div>
     <div class="box3" onclick="pick_with(2)"></div>
