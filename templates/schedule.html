@@ -153,16 +153,14 @@
                             return n._id === id
                         })
                         let title = rows[0]['title']
-                        {#let age = rows[0]['age']#}
                         let genre = rows[0]['genre']
                         let user_star = rows[0]['user_star']
                         let reviewer_star = rows[0]['reviewer_star']
-                        {#let tx = rows[0]['tx']#}
+                        let tx = rows[0]['tx']
                         let release = rows[0]['release']
-                        {#let comment = rows[i]['comment']#}
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
-                                    <pre></pre>
+                                    <pre>${tx}</pre>
                                     <hr class="modal_hr"/>
                                     <div style="height: 10px"></div>
                                     <h3>영화 상세 정보</h3>
@@ -244,11 +242,9 @@
                         let id = rows[i]['_id']
                         let image = rows[i]['image']
                         let title = rows[i]['title']
-                        {#let age = rows[i]['age']#}
                         let user_star = rows[i]['user_star']
                         let reviewer_star = rows[i]['reviewer_star']
                         let release = rows[i]['release']
-                        {#let comment = rows[i]['comment']#}
 
                         let temp_html = `<li>
                                             <a>
