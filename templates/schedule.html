@@ -21,16 +21,7 @@
             color: white;
             font-size: 14px;
         }
-
-        .wrap-p {
-            font-size: 20px;
-            max-width: 1410px;
-            width: 100%;
-            margin: 0 auto;
-
-
-        }
-
+        
         .movielist {
             max-width: 1500px;
             width: 100%;
@@ -150,19 +141,19 @@
     <script>
         $(document).ready(function () {
             listing();
-            $('.movielist').click(function (e) {
-                var id = e.target.getAttribute('id');
+            $('.movielist').click(function (e) { // 상세페이지 불러오기
+                let id = e.target.getAttribute('id'); // 클릭한 곳의 id값 가져오기
                 $('.con_tx').empty()
                 $.ajax({
                     type: 'GET',
                     url: '/update',
                     data: {},
                     success: function (response) {
-                        let rows = response['movies'].filter(function (n, i) {
+                        let rows = response['movies'].filter(function (n) { // 해당 아이디 값을 가지고 있는 DB데이터만 필터링
                             return n._id === id
                         })
                         let title = rows[0]['title']
-                        let age = rows[0]['age']
+                        {#let age = rows[0]['age']#}
                         let genre = rows[0]['genre']
                         let user_star = rows[0]['user_star']
                         let reviewer_star = rows[0]['reviewer_star']
@@ -172,7 +163,7 @@
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
                                     <pre></pre>
-                                    <hr class="modal_hr" color="#3f3f3f"/>
+                                    <hr class="modal_hr"/>
                                     <div style="height: 10px"></div>
                                     <h3>영화 상세 정보</h3>
                                     <section class="detail_wrap">
@@ -231,14 +222,14 @@
                                         </article>
                                     </section>
                                     <div style="height: 25px"></div>
-                                    <hr class="modal_hr" color="#3f3f3f"/>`
+                                    <hr class="modal_hr"/>`
                         $('.con_tx').append(temp_html)
                     }
                 })
             });
         });
 
-        function listing() {
+        function listing() { // DB에서 영화 항목 가져오기
             $('.movielist').empty()
             $.ajax({
                 type: 'GET',
@@ -253,7 +244,7 @@
                         let id = rows[i]['_id']
                         let image = rows[i]['image']
                         let title = rows[i]['title']
-                        let age = rows[i]['age']
+                        {#let age = rows[i]['age']#}
                         let user_star = rows[i]['user_star']
                         let reviewer_star = rows[i]['reviewer_star']
                         let release = rows[i]['release']
@@ -265,7 +256,7 @@
                                                     <div class="top">${title}</div>
                                                     <div class="middle">${user_star} ${reviewer_star}</div>
                                                     <div class="bottom">${release}</div>
-                                                    <img src=${image.concat("?type=m203_290_2")}>
+                                                    <img alt=${title} src=${image.concat("?type=m203_290_2")}>
                                                 </div>
                                             </a>
                                         </li>`
@@ -314,7 +305,7 @@
             </div>
 
             <button class="close_btn">
-                <img class="close_img" src="../static/icon/modal_exit_button.png"/>
+                <img class="close_img" alt="딛기" src="../static/icon/modal_exit_button.png"/>
             </button>
             <article class="con_tx">
 
@@ -328,11 +319,3 @@
 <script src="../static/modal.js"></script>
 </body>
 </html>
-
-<!--
-  2. 모달 창이 숨겨졌을 때 유튜브 영상도 초기화 STOP 기능
-  3. 모달 창 하단 리뷰 칸 생성
-  !. 네이버 영화예고편을 긁어와보려고 했지만 접속 거부, 그러므로 유튜브 이용해야 함
-  ?. 영화 포스터 클릭하면 해당 영화 상세 페이지를 긁어와야 함
-  ?. 영화 줄거리 ( 단 나눠서 ), 영화 제목/장르/제작국가/개봉일자/상영시간/등급/감독/출연
--->
