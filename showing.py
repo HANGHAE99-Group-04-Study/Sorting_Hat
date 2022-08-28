@@ -14,6 +14,25 @@ db.movies.update_many({}, {"$set": {'showing': 0}})  # DB에 있는 전체 영�
 current_url = 'https://movie.naver.com/movie/running/current.naver'  # 현재 상영작
 premovie_url = 'https://movie.naver.com/movie/running/premovie.naver'  # 상영 예정작
 
+# ------------Video URL 가져오는 함수-------------
+def get_video(id, img):
+    video_url = 'https://movie.naver.com/movie/bi/mi/media.naver?code='
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(video_url + id, headers=headers)
+    soup = BeautifulSoup(data.text, 'html.parser')
+    # select를 이용해서, li들을 불러오기
+    try:
+        video_url = "https://movie.naver.com" + soup.select_one(
+            '#content > div.article > div.obj_section2.noline > div > div.ifr_module > div.ifr_trailer > div > ul > li:nth-child(1) > p.tx_video.ico > a')[
+            'href']
+        data = requests.get(video_url + id, headers=headers)
+        soup = BeautifulSoup(data.text, 'html.parser')
+        video_url = "https://movie.naver.com" + re.search(r'.*.(?=&mid)',
+                                                          soup.select_one('#videoPlayer')['src']).group()
+    except Exception:
+        video_url = img
+    return video_url
 
 # ------------URL 가져오는 함수-------------
 
@@ -65,6 +84,7 @@ def get_url(url, tag):
             c_r_star = '0.00'
         c_release = re.search(r'\d{3,4}.*.봉',
                               movie.select_one('dl > dd:nth-child(3) > dl > dd:nth-child(2)').text).group()  # 개봉일
+        c_v_url = get_video(c_id, c_img)
         c_showing = tag
 
         movie_data = requests.get("https://movie.naver.com/movie/bi/mi/basic.naver?code=" + c_id, headers=headers)
@@ -86,6 +106,7 @@ def get_url(url, tag):
                 'user_star': c_n_star,
                 'reviewer_star': c_r_star,
                 'tx': c_tx,
+                'video_url': c_v_url,
                 'release': c_release,
                 'showing': c_showing,
             }
@@ -101,6 +122,7 @@ def get_url(url, tag):
                         'user_star': doc['user_star'],
                         'reviewer_star': doc['reviewer_star'],
                         'tx': doc['tx'],
+                        'video_url': doc['video_url'],
                         'release': doc['release'],
                         'showing': doc['showing']
                     },
