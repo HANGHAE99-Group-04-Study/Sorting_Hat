@@ -12,7 +12,7 @@ db = client.Sorting_Hat_Dev
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-url = 'https://movie.naver.com/movie/bi/mi/media.naver?code='  # 영화 정보
+url = 'https://movie.naver.com/movie/bi/mi/basic.naver?code='  # 영화 정보
 
 # # ---- 제목 ----
 # def get_title(id):
@@ -44,6 +44,30 @@ def get_genre(id):
     for genre_one in genre_all:
         genre.append(genre_one.text)
     return genre
+
+
+# ---- 유저 평점 ----
+# return 값 예제: 8.56
+def get_user_star(id):
+    data = requests.get(url + id, headers=headers)
+    soup = BeautifulSoup(data.text, 'html.parser')
+    user_star_all = soup.select('#pointNetizenPersentBasic > em')
+    user_star = []
+    for user_star_one in user_star_all:
+        user_star.append(user_star_one.text)
+    return ''.join(user_star)
+
+
+# ----  평점 ----
+# return 값 예제: 8.56
+def get_reviewer_star(id):
+    data = requests.get(url + id, headers=headers)
+    soup = BeautifulSoup(data.text, 'html.parser')
+    reviewer_star_all = soup.select('#content > div.article > div.mv_info_area > div.mv_info > div.main_score > div:nth-child(2) > div > a > div > em')
+    reviewer_star = []
+    for reviewer_star_one in reviewer_star_all:
+        reviewer_star.append(reviewer_star_one.text)
+    return ''.join(reviewer_star)
 
 
 # ---- 국가 ----
@@ -97,7 +121,7 @@ def get_day(id):
 
 
 # ---- 감독 ----
-# return 값 예제: 20190516
+# return 값 예제: 소피 하이드
 def get_director(id):
     data = requests.get(url + id, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
@@ -124,6 +148,21 @@ def get_actor(id):
     return actor
 
 
+# ---- 줄거리 ----
+# return 값 예제: 8.56
+def get_tx(id):
+    print(url + id)
+    data = requests.get(url + id, headers=headers)
+    soup = BeautifulSoup(data.text, 'html.parser')
+
+    try:
+        text = soup.select_one('#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > p').text
+        # tx = re.sub(r"^\s+|\s+$", "", tx)
+    except AttributeError:
+        text = '내용없음'
+    return text
+
+
 # ---- 등급 ----
 # return 값 예제
 # 청소년 관람불가
@@ -148,7 +187,8 @@ def get_grade(id):
 
 # ---- 비디오 URL ----
 def get_video(id, img):
-    data = requests.get(url + id, headers=headers)
+    video_url = 'https://movie.naver.com/movie/bi/mi/media.naver?code='
+    data = requests.get(video_url + id, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
     # select를 이용해서, li들을 불러오기
     try:
@@ -163,36 +203,3 @@ def get_video(id, img):
         video_url = img
     return video_url
 
-
-movies_list = list(db.movies.find({}, {}))
-movies = []
-for movie in movies_list:
-    id = movie['_id']
-    title = movie['title']
-    image = get_image(id)
-    grade = get_grade(id)
-    genre = get_genre(id)
-    video_url = get_video(id, image)
-    release = get_day(id)
-    nation = get_nation(id)
-    time = get_time(id)
-    director = get_director(id)
-    actor = get_actor(id)
-    showing = movie['showing']
-    doc = {
-        'id': id,
-        'title': title,
-        'image': image,
-        'age': grade,
-        'genre': genre,
-        'video_url': video_url,
-        'release': release,
-        'nation': nation,
-        'time': time,
-        'director': director,
-        'actor': actor,
-        'showing': showing,
-    }
-    print(doc)
-    movies.append(doc)
-print(movies)
