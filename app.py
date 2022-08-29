@@ -1,10 +1,10 @@
 import certifi
 import os
+import crawling
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
-
 
 client = MongoClient(os.environ.get("MONGO"), tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
@@ -64,6 +64,15 @@ def showing():
 def showing_get():
     movies_list = list(db.movies.find({}, {}))
     return jsonify({'movies': movies_list})
+
+
+@app.route('/update_post', methods=["GET"])
+def sca_get():
+    id = request.args.get('id')
+    movie = list(db.movies.find({'_id': id}, {}))
+    doc = crawling.get_all(id, movie[0]['title'], movie[0]['showing'])
+    print(doc)
+    return jsonify({'movies': doc})
 
 
 def shutdown_server():

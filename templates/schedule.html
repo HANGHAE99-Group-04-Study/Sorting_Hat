@@ -162,19 +162,21 @@
                 $('.con_tx').empty()
                 $.ajax({
                     type: 'GET',
-                    url: '/update',
-                    data: {},
+                    url: '/update_post',
+                    data: {id: id},
                     success: function (response) {
-                        let rows = response['movies'].filter(function (n) { // 해당 아이디 값을 가지고 있는 DB데이터만 필터링
-                            return n._id === id
-                        })
-                        let title = rows[0]['title']
-                        let genre = rows[0]['genre']
-                        let user_star = rows[0]['user_star']
-                        let reviewer_star = rows[0]['reviewer_star']
-                        let tx = rows[0]['tx']
-                        let release = rows[0]['release']
-                        let video_url = rows[0]['video_url']
+                        let rows = response['movies']
+                        console.log(rows)
+                        let title = rows['title']
+                        let genre = rows['genre']
+                        let nation = rows['nation']
+                        let director = rows['director']
+                        let actor = rows['actor']
+                        let user_star = rows['user_star']
+                        let reviewer_star = rows['reviewer_star']
+                        let tx = rows['tx']
+                        let release = rows['release']
+                        let video_url = rows['video_url']
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
                                     <pre>${tx}</pre>
@@ -225,15 +227,15 @@
                                               <svg><use xlink:href="#fivestars" /></svg>
                                             </div>-->
                                             <br/>
-                                            <span>제작국가:</span> &nbsp한국<br/>
+                                            <span>제작국가:</span> ${nation}<br/>
                                             <span>장르:</span> ${genre}<br/>
-                                            <span>감독:</span> &nbsp이정재
+                                            <span>감독:</span> ${director}
                                         </article>
                                         <article id="detail2">
                                             <span>평론가 평점</span> ${reviewer_star}<br/>
                                             <span>개봉일자:</span> ${release}<br/>
                                             <span>상영시간:</span> &nbsp125분<br/>
-                                            <span>출연:</span> &nbsp이정재(박평호), 정우성(김정도)
+                                            <span>출연:</span> ${actor}
                                         </article>
                                     </section>
                                     <div style="height: 25px"></div>
