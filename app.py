@@ -1,6 +1,5 @@
 import certifi
 import os
-import crawling
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 
@@ -70,9 +69,7 @@ def showing_get():
 def sca_get():
     id = request.args.get('id')
     movie = list(db.movies.find({'_id': id}, {}))
-    doc = crawling.get_all(id, movie[0]['title'], movie[0]['showing'])
-    print(doc)
-    return jsonify({'movies': doc})
+    return jsonify({'movies': movie})
 
 
 def shutdown_server():

@@ -30,6 +30,7 @@ def get_url(url, tag):
         m_id = re.search(r'(?<=code=)(.*?)$', movie.select_one('dl > dt > a')['href']).group()  # 영화별 고유 ID값
         m_title = movie.select_one('dl > dt > a').text  # 영화제목
         doc = crawling.get_all(m_id, m_title, tag)
+        print(doc['showing'])
         db.movies.update_one(
             {'_id': doc['id']},
             {
@@ -48,7 +49,7 @@ def get_url(url, tag):
                     'tx': doc['tx'],
                     'user_star': doc['user_star'],
                     'reviewer_star': doc['reviewer_star'],
-                    'showing': doc['showing']
+                    'showing': doc['showing'],
                 },
             },
             upsert=True
@@ -58,7 +59,8 @@ def get_url(url, tag):
             {
                 "$set": {
                     'user_star': doc['user_star'],
-                    'reviewer_star': doc['reviewer_star']
+                    'reviewer_star': doc['reviewer_star'],
+                    'showing': doc['showing'],
                 },
             }
         )

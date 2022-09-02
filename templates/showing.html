@@ -140,6 +140,7 @@
                 data: {},
                 success: function (response) {
                     let rows = response['movies']
+                    console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         if(rows[i]['showing'] !== 1){
                             continue
@@ -150,7 +151,6 @@
                         let user_star = rows[i]['user_star']
                         let reviewer_star = rows[i]['reviewer_star']
                         let release = rows[i]['release']
-                        {#let comment = rows[i]['comment']#}
 
                         let temp_html = `<li>
                                             <a href="">
@@ -158,7 +158,7 @@
                                                     <div class="top">${title}</div>
                                                     <div class="middle">${user_star} ${reviewer_star}</div>
                                                     <div class="bottom">${release}</div>
-                                                    <img src=${image.concat("?type=m203_290_2")}>
+                                                    <img src=${image}>
                                                 </div>
                                             </a>
                                         </li>`

@@ -167,16 +167,16 @@
                     success: function (response) {
                         let rows = response['movies']
                         console.log(rows)
-                        let title = rows['title']
-                        let genre = rows['genre']
-                        let nation = rows['nation']
-                        let director = rows['director']
-                        let actor = rows['actor']
-                        let user_star = rows['user_star']
-                        let reviewer_star = rows['reviewer_star']
-                        let tx = rows['tx']
-                        let release = rows['release']
-                        let video_url = rows['video_url']
+                        let title = rows[0]['title']
+                        let genre = rows[0]['genre']
+                        let nation = rows[0]['nation']
+                        let director = rows[0]['director']
+                        let actor = rows[0]['actor']
+                        let user_star = rows[0]['user_star']
+                        let reviewer_star = rows[0]['reviewer_star']
+                        let tx = rows[0]['tx']
+                        let release = rows[0]['release']
+                        let video_url = rows[0]['video_url']
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
                                     <pre>${tx}</pre>
@@ -275,7 +275,7 @@
                                                     <div class="top">${title}</div>
                                                     <div class="middle">${user_star} ${reviewer_star}</div>
                                                     <div class="bottom">${release}</div>
-                                                    <img alt=${title} src=${image.concat("?type=m203_290_2")}>
+                                                    <img alt=${title} src=${image}>
                                                 </div>
                                             </a>
                                         </li>`
