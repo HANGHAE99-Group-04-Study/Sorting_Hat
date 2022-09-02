@@ -187,7 +187,6 @@ def get_all(g_id, title, showing):
     tx = get_tx(soup)
     user_star = get_user_star(soup)
     reviewer_star = get_reviewer_star(soup)
-    showing = showing
     doc = {
         'id': g_id,
         'title': title,
