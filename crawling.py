@@ -113,7 +113,7 @@ def get_actor(data):
     if data.find(class_='step3') is None:
         return ''
     else:
-        actor_all = data.select('#content > div.article > div.mv_info_area > div.mv_info > dl > dd:nth-child(6) > p')
+        actor_all = data.select('#content > div.article > div.mv_info_area > div.mv_info > dl > dd:nth-child(6) > p > a')
         for actor_one in actor_all:
             actor.append(actor_one.text)
     return actor
