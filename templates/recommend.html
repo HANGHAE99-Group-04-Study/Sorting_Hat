@@ -90,6 +90,10 @@
             display: none;
         }
 
+        .box .stamp {
+            display: none;
+        }
+
         .picked-poster {
             width: 265px;
             height: 380px;
@@ -109,6 +113,14 @@
             position: absolute;
             top: 80%;
             left: 70%;
+            width: 80px;
+            height: 80px;
+        }
+
+        .picked-box .stamp {
+            position: absolute;
+            top: 75%;
+            left: 86.5%;
             width: 80px;
             height: 80px;
         }
@@ -161,61 +173,73 @@
                 opacity: 0;
             }
         }
-                .box1 {
+        #box0 {
             position: absolute;
 
             width: 600px;
             height: 330px;
-            left: 115px;
-            top: 280px;
-
+            left: 18%;
+            top: 14%;
             background: #AB00FC;
+            filter: brightness(0.5);
+        }
+        #box0:hover {
+            filter: brightness(1);
         }
 
-        .box2 {
+        #box1 {
             position: absolute;
 
             width: 600px;
             height: 330px;
-            top: 280px;
-            right: 115px;
-
+            top: 14%;
+            right: 18%;
+            filter: brightness(0.5);
             background: #FC71FF;
         }
-
-        .box3 {
-            position: absolute;
-            width: 600px;
-            height: 330px;
-            left: 115px;
-            top: 648px;
-
-            background: #4B5DFF;
+        #box1:hover {
+            filter: brightness(1);
         }
 
-        .box4 {
+        #box2 {
             position: absolute;
             width: 600px;
             height: 330px;
-            right: 115px;
-            top: 648px;
+            left: 18%;
+            top: 53%;
+            filter: brightness(0.5);
+            background: #4B5DFF;
+        }
+        #box2:hover {
+            filter: brightness(1);
+        }
 
+        #box3 {
+            position: absolute;
+            width: 600px;
+            height: 330px;
+            right: 18%;
+            top: 53%;
+            filter: brightness(0.5);
             background: #FFF854;
+        }
+        #box3:hover {
+            filter: brightness(1);
         }
 
         .text {
             position: absolute;
 
-            left: 640px;
-            top: 621px;
+            left: 45%;
+            top: 50%;
         }
 
         .con1 {
             position: absolute;
             width: 300px;
             height: 240px;
-            left: 290px;
-            top: 333px;
+            left: 27.5%;
+            top: 20%;
             background-size: 240px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
             pointer-events: none;
@@ -225,8 +249,8 @@
             position: absolute;
             width: 250px;
             height: 260px;
-            right: 290px;
-            top: 321px;
+            right: 27.5%;
+            top: 20%;
             background-size: 260px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
             pointer-events: none;
@@ -236,8 +260,8 @@
             position: absolute;
             width: 250px;
             height: 280px;
-            left: 290px;
-            top: 698px;
+            left: 27%;
+            top: 58%;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
             background-size: 260px;
             pointer-events: none;
@@ -247,8 +271,8 @@
             position: absolute;
             width: 270px;
             height: 300px;
-            right: 280px;
-            top: 698px;
+            right: 27%;
+            top: 58%;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
             background-size: 280px;
             pointer-events: none;
@@ -399,7 +423,7 @@
                 let temp_html = `<div class="poster" id ="movie_${i}">
                                     <img src="${arr_movies[i]['img_url']}" class="poster-thumbnail" onclick="pick_movie(${i})">
                                     <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp" id="id_stamp">
-</div>`;
+                                 </div>`;
                 if (i < 6) {
                     $('#wrap_movie_top').append(temp_html)
                 } else {
@@ -442,8 +466,8 @@
         // num_with 0 : 혼자, 1 : 커플, 2 : 친구, 3 : 가족
         function pick_with(num_with) {
             num_pickWith = num_with;
+            document.getElementById('box' + num_with).className = 'picked-box';
         }
-
         // END : 동행인선택
 
         function check_input() {
@@ -465,7 +489,7 @@
             }
 
             if (num_pickWith < 0 || num_pickWith > 4) {
-                alert('같이 보러갈 사람을 선택해주세요.');
+                alert('같이 보러 갈 사람을 선택해주세요.');
 
                 page = 3;
                 mHtml.animate({scrollTop: posTop});
@@ -548,10 +572,18 @@
 
 <!--START : 동행인 질문 -->
 <div class="section" id="section_with">
-    <div class="box1" onclick="pick_with(0)"></div>
-    <div class="box2" onclick="pick_with(1)"></div>
-    <div class="box3" onclick="pick_with(2)"></div>
-    <div class="box4" onclick="pick_with(3)"></div>
+    <div class="box" id="box0" onclick="pick_with(0)">
+        <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp">
+    </div>
+    <div class="box" id="box1" onclick="pick_with(1)">
+        <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp">
+    </div>
+    <div class="box" id="box2" onclick="pick_with(2)">
+        <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp">
+    </div>
+    <div class="box" id="box3" onclick="pick_with(3)">
+        <img src="https://cdn4.iconfinder.com/data/icons/bold-purple-free-samples/32/Done_Circle_Symbol_Downloaded-256.png" class="stamp">
+    </div>
     <div class="text">같이 보러 가는 사람이 있나요?</div>
     <div class="con1"></div>
     <div class="con2"></div>
