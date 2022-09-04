@@ -17,7 +17,12 @@ const closeModal = () => {
 //overlay.addEventListener('click', closeModal);
 closeBtn.addEventListener('click', function (e) {
   modal.classList.toggle('opaque');
-
+  document
+    .getElementById('player')
+    .contentWindow.postMessage(
+      '{"event":"command", "func":"stopVideo", "args":""}',
+      '*'
+    ); // iframe 영상 멈추기
   modal.addEventListener('transitionend', function (e) {
     this.classList.toggle('unstaged');
     this.removeEventListener('transitionend', arguments.callee);
@@ -26,7 +31,12 @@ closeBtn.addEventListener('click', function (e) {
 
 overlay.addEventListener('click', function (e) {
   modal.classList.toggle('opaque');
-
+  document
+    .getElementById('player')
+    .contentWindow.postMessage(
+      '{"event":"command", "func":"stopVideo", "args":""}',
+      '*'
+    ); // iframe 영상 멈추기
   modal.addEventListener('transitionend', function (e) {
     this.classList.toggle('unstaged');
     this.removeEventListener('transitionend', arguments.callee);
@@ -38,4 +48,24 @@ for (let i = 0; i < openButton.length; i++) {
     modal.classList.toggle('opaque');
     modal.classList.toggle('unstaged');
   });
+}
+
+// Youatube Video
+//document.getElementById("player").contentWindow.postMessage('{"event":"command", "func":"stopVideo", "args":""}', '*');
+
+function goodBtnToggle() {
+  let goodBtn = document.querySelector('.good-btn');
+  let badBtn = document.querySelector('.bad-btn');
+  if (badBtn.classList.contains('active')) {
+    badBtn.classList.toggle('active');
+  }
+  goodBtn.classList.toggle('active');
+}
+function badBtnToggle() {
+  let goodBtn = document.querySelector('.good-btn');
+  let badBtn = document.querySelector('.bad-btn');
+  if (goodBtn.classList.contains('active')) {
+    goodBtn.classList.toggle('active');
+  }
+  badBtn.classList.toggle('active');
 }
