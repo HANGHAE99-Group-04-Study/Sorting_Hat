@@ -166,7 +166,6 @@
                     data: {id: id},
                     success: function (response) {
                         let rows = response['movies']
-                        console.log(rows)
                         let title = rows[0]['title']
                         let genre = rows[0]['genre']
                         let nation = rows[0]['nation']
@@ -174,19 +173,20 @@
                         let actor = rows[0]['actor']
                         let user_star = rows[0]['user_star']
                         let reviewer_star = rows[0]['reviewer_star']
+                        let time = rows[0]['time']
                         let tx = rows[0]['tx']
                         let release = rows[0]['release']
                         let video_url = rows[0]['video_url']
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
-                                    <pre>${tx}</pre>
+                                    <p>${tx}</p>
                                     <hr class="modal_hr"/>
                                     <div style="height: 10px"></div>
                                     <h3>영화 상세 정보</h3>
                                     <section class="detail_wrap">
                                         <article id="detail1">
-                                            <span>관람객 평점</span>${user_star}
-                                            <!--<svg style="display: none">
+                                            <span>관람객 평점</span>
+                                            <svg style="display: none">
                                               <defs>
                                                 <symbol id="fivestars">
                                                   <path
@@ -223,18 +223,59 @@
                                             </svg>
                                             <div class="rating">
                                               <div class="rating-bg" style="width: 90%"></div>
-                                              <progress class="rating-bg" value="8.52" max="10"></progress>
+                                              <progress class="rating-bg" value="${user_star}" max="10"></progress>
                                               <svg><use xlink:href="#fivestars" /></svg>
-                                            </div>-->
+                                            </div>
                                             <br/>
                                             <span>제작국가:</span> ${nation}<br/>
                                             <span>장르:</span> ${genre}<br/>
                                             <span>감독:</span> ${director}
                                         </article>
                                         <article id="detail2">
-                                            <span>평론가 평점</span> ${reviewer_star}<br/>
+                                            <span>평론가 평점</span>
+                                                <svg style="display: none">
+                                                  <defs>
+                                                    <symbol id="fivestars">
+                                                      <path
+                                                        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                        fill="#191919"
+                                                        fill-rule="evenodd"
+                                                      />
+                                                      <path
+                                                        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                        fill="#191919"
+                                                        fill-rule="evenodd"
+                                                        transform="translate(24)"
+                                                      />
+                                                      <path
+                                                        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                        fill="#191919"
+                                                        fill-rule="evenodd"
+                                                        transform="translate(48)"
+                                                      />
+                                                      <path
+                                                        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                        fill="#191919"
+                                                        fill-rule="evenodd"
+                                                        transform="translate(72)"
+                                                      />
+                                                      <path
+                                                        d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                        fill="#191919"
+                                                        fill-rule="evenodd"
+                                                        transform="translate(96)"
+                                                      />
+                                                    </symbol>
+                                                  </defs>
+                                                </svg>
+                                                <div class="rating">
+                                                  <div class="rating-bg" style="width: 90%"></div>
+                                                  <progress class="rating-bg" value="${reviewer_star}" max="10"></progress>
+                                                  <svg><use xlink:href="#fivestars" /></svg>
+                                            </div>
+                                            <br/>
                                             <span>개봉일자:</span> ${release}<br/>
-                                            <span>상영시간:</span> &nbsp125분<br/>
+                                            <span>상영시간:</span> ${time}<br/>
                                             <span>출연:</span> ${actor}
                                         </article>
                                     </section>
@@ -259,9 +300,9 @@
                 success: function (response) {
                     let rows = response['movies']
                     for (let i = 0; i < rows.length; i++) {
-                        if (rows[i]['showing'] !== 2) {
-                            continue
-                        }
+                        // if (rows[i]['showing'] !== 2) {
+                        //     continue
+                        // }
                         let id = rows[i]['_id']
                         let image = rows[i]['image']
                         let title = rows[i]['title']

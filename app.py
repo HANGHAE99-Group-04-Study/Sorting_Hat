@@ -3,6 +3,8 @@ import os
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 
+import crawling
+
 app = Flask(__name__)
 
 client = MongoClient(os.environ.get("MONGO"), tlsCAFile=certifi.where())
@@ -69,6 +71,7 @@ def showing_get():
 def sca_get():
     id = request.args.get('id')
     movie = list(db.movies.find({'_id': id}, {}))
+    movie[0]['video_url'] = crawling.get_video(id, movie[0]['image'])
     return jsonify({'movies': movie})
 
 

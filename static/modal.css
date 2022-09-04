@@ -122,6 +122,26 @@
 /*.hidden {
   display: none;
 }*/
+.headLine {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 2.2em;
+  margin-top: 1%;
+  margin-bottom: 3%;
+}
+
+#age_restriction {
+  background-color: transparent;
+
+  color: white;
+  border-color: white;
+  border-radius: 15px;
+  font-size: 1.5em;
+  height: 80%;
+  margin-top: 5px;
+  margin-left: 3%;
+  padding: 1px 6px 5px 5px;
+}
 
 .con_tx {
   margin-top: 2%;
@@ -144,4 +164,107 @@
 
 #detail1 {
   width: 35%;
+}
+
+/* ---------------------- */
+
+.input-group {
+  height: 50px;
+  border-radius: 50px;
+  border: 2px;
+  border-color: transparent;
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+}
+
+.good-btn {
+  width: 6%;
+  background: url(./svgtopng/goodBtn.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(90, 112, 138);
+}
+.good-btn.active {
+  width: 6%;
+  background: url(./svgtopng/goodBtnFill.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(44, 135, 247);
+}
+
+.bad-btn {
+  width: 6%;
+  background: url(./svgtopng/badBtn.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(190, 106, 106);
+}
+.bad-btn.active {
+  width: 6%;
+  background: url(./svgtopng/badBtnFill.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(255, 53, 53);
+}
+
+.name-input {
+  width: 15%;
+  border-color: #3f3f3f;
+  color: white;
+  background-color: transparent;
+  padding-left: 20px;
+}
+
+.comment-input {
+  width: 63%;
+  border-color: #3f3f3f;
+  color: white;
+  background-color: transparent;
+  padding-left: 20px;
+}
+
+.name-input::placeholder {
+  color: #3f3f3f;
+  font-size: 1.2em;
+}
+
+.comment-input::placeholder {
+  color: #3f3f3f;
+  font-size: 1em;
+}
+
+.submit-btn {
+  width: 10%;
+  color: white;
+  font-size: 1.1em;
+  background-color: black;
+}
+
+.comment-box {
+  line-height: 1.2em;
+}
+.comment-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 1.3em;
+}
+
+#color-sign {
+  font-size: 0.8em;
+  width: 3%;
+}
+#nickname {
+  font-size: 0.8em;
+  width: 18%;
+}
+#comment {
+  font-size: 0.8em;
+  color: #bbbbbb;
+}
+
+.comment-hr {
+  color: rgb(131, 130, 130);
 }
