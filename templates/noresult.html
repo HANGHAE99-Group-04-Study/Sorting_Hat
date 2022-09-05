@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SORTING HAT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="../static/head-bar.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-size: 14px;
+        }
+
+        .txt {
+            position: static;
+            width: 1440px;
+            height: 60px;
+            margin: 0 auto;
+            margin-top: 400px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 48px;
+            line-height: 58px;
+            text-align: center;
+
+            color: #FFFFFF;
+        }
+
+        .subtxt {
+            position: absolute;
+            width: 192px;
+            height: 24px;
+            left: 1210px;
+            top: 480px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 24px;
+
+            color: #FFFFFF;
+        }
+
+        .con {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            left: 1400px;
+            top: 477px;
+
+            background-image: url("https://cdn1.iconfinder.com/data/icons/unicons-line-vol-1/24/arrow-circle-right-512.png");
+            background-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<!-- START HEAD BAR -->
+    <div class="head-bar">
+        <h1>SORTING HAT</h1>
+        <div class="hat-box"></div>
+        <a href="recommend">영화추천</a>
+        <a href="showing">현재상영작</a>
+        <a href="schedule">상영예정작</a>
+    </div>
+    <!-- END HEAD BAR-->
+    <div class="txt">현재 상영중인 영화 중 추천 영화가 없습니다.</div>
+    <div class="subtxt">상영예정작 보러가기</div>
+
+    <a href="http://localhost:5000/schedule">
+        <div class="con"></div>
+    </a>
+</body>
+</html>
