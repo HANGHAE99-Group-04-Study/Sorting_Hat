@@ -11,13 +11,21 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
 
     <link href="../static/head-bar.css" rel="stylesheet"/>
     <link href="../static/DP.css" rel="stylesheet"/>
     <link href="../static/star.css" rel="stylesheet"/>
     <link href="../static/modal.css" rel="stylesheet"/>
     <link href="../static/showing.css" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="../static/pagination.css" rel="stylesheet"/>
+
 
 
 
@@ -27,6 +35,7 @@
             listing()
             function listing() {
                 $('#movielist').empty()
+                $('.pgbox').empty()
                 $.ajax({
                     type: 'GET',
                     url: '/update',
@@ -34,7 +43,7 @@
                     success: function (response) {
                         let rows = response['movies']
                         for (let i = 0; i < rows.length; i++) {
-                            if (rows[i]['showing'] !== 1) {
+                            if (rows[i]['showing'] !== 1) { // || typeof rows[i]['image'] === "undefined"
                                 continue
                             }
                             let id = rows[i]['_id']
@@ -47,7 +56,8 @@
                             let genre = rows[i]['genre']
                             //let comment = rows[i]['comment']
 
-                            let temp_html = `<li>
+
+                            let temp_html = `<li class="mvpost">
                                             <a>
                                                 <div class="screen" id=${id}>
                                                     <div class="top">${title}</div>
@@ -62,25 +72,31 @@
                             $('#movielist').append(temp_html)
 
                         }
-
-
-
                         // 페이지네이션 시작
-                        const rowsPerPage = 20 // 한 페이지에 출력되는 개수
+                        const rowsPerPage = 16 // 한 페이지에 출력되는 개수
                         const newRows = document.querySelectorAll('#movielist li')
                         const rowsCount = newRows.length
                         const pageCount = Math.ceil(rowsCount / rowsPerPage)
                         const numbers = document.querySelector('#numbers')
 
+                        const prevPageBtn = document.querySelector('.pg .fa-angle-left')
+                        const nextPageBtn = document.querySelector('.pg .fa-angle-right')
+                        let pageActiveIdx = 0 //현재 보고 있는 페이지 그룹 번호
+                        let maxPageNum = 3 //페이지 그룹의 최대 개수
                         // 페이지네이션 생성
                        for (let i = 1; i <= pageCount; i++) {
                             numbers.innerHTML += `<li><a href="" onclick="javascript:window.scrollTo(0,0)">${i}</a></li>`
+
                         }
                         const numberBtn = numbers.querySelectorAll('a')
+
+                        //페이지네이션 번호 감추기
+                        for(nb of numberBtn){
+                            nb.style.display = 'none'
+                        }
                         numberBtn.forEach((item,idx) => {
                             item.addEventListener('click', (e) => {
                                 e.preventDefault()
-                                //테이블 출력 함수
                                 displayRow(idx)
                             })
                         })
@@ -88,13 +104,11 @@
                         function displayRow(idx) {
                             let start = idx * rowsPerPage
                             let end = start + rowsPerPage
-
                             let rowsArray = [...newRows]
 
                             for(ra of rowsArray) {
                                 ra.style.display = 'none'
                             }
-
                             let newRow = rowsArray.slice(start, end)
                             for(nr of newRow){
                                 nr.style.display = ''
@@ -104,11 +118,53 @@
                             }
                             numberBtn[idx].classList.add('active')
                         }
-                       displayRow(0)
-                        //...작업중
+                        displayRow(0)
 
+                        //페이지네이션 그룹 표시 함수
+                        function displayPage(num){
+                            //페이지네이션 번호 감추기
+                            for(nb of numberBtn){
+                                nb.style.display = 'none'
+                            }
+                            let totalPageCount = Math.ceil(pageCount/maxPageNum)
 
+                            let pageArr = [...numberBtn]
+                            let start = num * maxPageNum
+                            let end = start + maxPageNum
+                            let pageListArr = pageArr.slice(start, end)
 
+                            for(item of pageListArr){
+                                item.style.display = 'block'
+                            }
+                            if(pageActiveIdx === 0){
+                                prevPageBtn.style.display = 'none'
+                            }else{
+                                prevPageBtn.style.display = 'block'
+                            }
+                            if(pageActiveIdx === totalPageCount - 1){
+                                nextPageBtn.style.display = 'none'
+                            }else{
+                                nextPageBtn.style.display = 'block'
+                            }
+
+                        }
+                        displayPage(0)
+
+                        nextPageBtn.addEventListener('click',()=>{
+                            let nextPageNum = pageActiveIdx * maxPageNum + maxPageNum
+                            displayRow(nextPageNum)
+                            ++pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        prevPageBtn.addEventListener('click',()=>{
+                            let prevPageNum = pageActiveIdx * maxPageNum - maxPageNum
+                            displayRow(prevPageNum)
+                            --pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        //페이지네이션 끝
 
 
                     }
@@ -116,6 +172,7 @@
             }
 
         })
+
     </script>
 </head>
 <body>
@@ -128,39 +185,31 @@
         <a href="schedule">상영예정작</a>
     </div>
     <!-- END HEAD BAR-->
-    <img src="https://blog.kakaocdn.net/dn/cN8Jog/btrG3qjo3d0/YON0Dq2Ic8kJNTKV5V0ntK/img.jpg" width="100%">
-
-    <!-- 상영작 시작 -->
-    <div class="wrap-p">
-        <p>현재상영작</p>
-    </div>
-    <div id="movielist">
-    </div>
-    <!-- 상영작 끝 -->
-
 
 
     <!-- 상영작 시작 -->
     <section class="moviebox">
-        <h1 class="pb">현재상영작</h1>
+        <h5 class="pb">현재상영작</h5>
         <!-- 상영작 포스터 리스트 시작-->
         <article id="movielist">
 
-
         </article>
+        <!-- 상영작 포스터 리스트 끝-->
 
-        <div class="pagination">
-            <i class="fa-solid fa-angle-left"></i>
+        <!--페이지네이션 시작-->
+        <div class="pg">
+            <i class="fa-solid fa-angle-left" style="display: none"></i>
             <ol id="numbers">
 
             </ol>
-            <i class="fa-solid fa-angle-right"></i>
+            <i class="fa-solid fa-angle-right" style="display: none"></i>
         </div>
-
-
-        <!-- 상영작 포스터 리스트 끝-->
+        <!--페이지네이션 끝-->
     </section>
     <!-- 상영작 끝 -->
+
+
+
 
 </body>
 </html>
