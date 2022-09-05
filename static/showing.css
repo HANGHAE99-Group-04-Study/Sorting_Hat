@@ -7,47 +7,39 @@ body {
 .moviebox {
     margin-top: 100px;
 }
-
 .pb {
-
     max-width: 1480px;
     width: 100%;
     margin: 0 auto;
-
-
+    font-weight: bold;
 }
-
-
 #movielist {
     max-width: 1500px;
     width: 100%;
     margin: 0 auto;
-
 }
-
 ul {
     font-size: 0;
 }
-
-li {
+.mvpost {
     display: inline-block;
     vertical-align: top;
     width: 25%;
 }
 
-li > a {
+.mvpost > a {
     display: block;
     width: auto;
     text-decoration: none;
     margin: 5px;
 }
 
-li > a .screen {
+.mvpost > a .screen {
     position: relative;
     overflow: hidden;
 }
 
-li > a .screen .top {
+.mvpost > a .screen .top {
     position: absolute;
     bottom: 150%;
     left: 30px;
@@ -55,10 +47,9 @@ li > a .screen .top {
     color: #fff;
     font-size: 26px;
     font-weight: bold;
-
 }
 
-li > a .screen .middle {
+.mvpost > a .screen .middle {
     position: absolute;
     top: 150%;
     left: 30px;
@@ -68,7 +59,7 @@ li > a .screen .middle {
 
 }
 
-li > a .screen .middle2 {
+.mvpost > a .screen .middle2 {
     position: absolute;
     top: 150%;
     left: 30px;
@@ -78,7 +69,7 @@ li > a .screen .middle2 {
 
 }
 
-li > a .screen .middle3 {
+.mvpost > a .screen .middle3 {
     position: absolute;
     top: 150%;
     left: 30px;
@@ -88,7 +79,7 @@ li > a .screen .middle3 {
 
 }
 
-li > a .screen .bottom {
+.mvpost > a .screen .bottom {
     position: absolute;
     top: 150%;
     left: 30px;
@@ -99,31 +90,31 @@ li > a .screen .bottom {
 
 }
 
-li > a .screen img {
+.mvpost > a .screen img {
     width: 100%;
 }
 
-li > a:hover .top {
+.mvpost > a:hover .top {
     bottom: 52%;
 }
 
-li > a:hover .middle {
+.mvpost > a:hover .middle {
     top: 52%;
 }
 
-li > a:hover .middle2 {
+.mvpost > a:hover .middle2 {
     top: 57%;
 }
 
-li > a:hover .middle3 {
+.mvpost > a:hover .middle3 {
     top: 62%;
 }
 
-li > a:hover .bottom {
+.mvpost > a:hover .bottom {
     top: 67%;
 }
 
-li > a .screen::after {
+.mvpost > a .screen::after {
     content: '';
     display: block;
     position: absolute;
@@ -137,50 +128,6 @@ li > a .screen::after {
     transition: all .35s;
 }
 
-li > a:hover .screen::after {
+.mvpost > a:hover .screen::after {
     opacity: 1;
-}
-
-
-.pagination {
-    background: #000;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pagination i {
-    color: #fff;
-    font-size: 1.2em;
-}
-
-#numbers {
-    padding: 0;
-    margin: 0 2rem;
-    list-style-type: none;
-    display: flex;
-}
-
-#numbers li a {
-    font-size: 18px;
-    color: #fff;
-    padding: .5rem 1rem;
-    text-decoration: none;
-    opacity: .7;
-}
-
-#numbers li a:hover {
-    font-size: 20px;
-    font-weight: bold;
-
-}
-
-#numbers li a.active {
-    font-size: 20px;
-    font-weight: bold;
-
-
 }
