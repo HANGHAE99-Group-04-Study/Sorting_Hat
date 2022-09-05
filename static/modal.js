@@ -7,7 +7,6 @@ const closeBtn = modal.querySelector('.close_btn'); // 상세 페이지 내 버�
 // 닫기 버튼 클릭 시 상세페이지 닫도록 이벤트 추가
 closeBtn.addEventListener('click', function (e) {
   modal.classList.toggle('opaque');
-
   modal.addEventListener('transitionend', function (e) {
     this.classList.toggle('unstaged');
     this.removeEventListener('transitionend', arguments.callee);
@@ -17,7 +16,6 @@ closeBtn.addEventListener('click', function (e) {
 // 상세페이지에서 배경 클릭 시 상세페이지 닫도록 이벤트 추가
 overlay.addEventListener('click', function (e) {
   modal.classList.toggle('opaque');
-
   modal.addEventListener('transitionend', function (e) {
     this.classList.toggle('unstaged');
     this.removeEventListener('transitionend', arguments.callee);
