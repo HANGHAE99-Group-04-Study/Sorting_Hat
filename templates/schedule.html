@@ -13,6 +13,10 @@
     <link href="../static/DP.css" rel="stylesheet"/>
     <link href="../static/star.css" rel="stylesheet"/>
     <link href="../static/modal.css" rel="stylesheet"/>
+    <link href="../static/pagination.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
@@ -32,25 +36,25 @@
             font-size: 0;
         }
 
-        li {
+        .mvpost {
             display: inline-block;
             vertical-align: top;
             width: 25%;
         }
 
-        li > a {
+        .mvpost > a {
             display: block;
             width: auto;
             text-decoration: none;
             margin: 5px;
         }
 
-        li > a .screen {
+        .mvpost > a .screen {
             position: relative;
             overflow: hidden;
         }
 
-        li > a .screen .top {
+        .mvpost > a .screen .top {
             position: absolute;
             bottom: 150%;
             left: 30px;
@@ -61,7 +65,7 @@
 
         }
 
-        li > a .screen .middle {
+        .mvpost > a .screen .middle {
             position: absolute;
             top: 150%;
             left: 30px;
@@ -71,7 +75,7 @@
 
         }
 
-        li > a .screen .bottom {
+        .mvpost > a .screen .bottom {
             position: absolute;
             top: 150%;
             left: 30px;
@@ -82,23 +86,23 @@
 
         }
 
-        li > a .screen img {
+        .mvpost > a .screen img {
             width: 100%;
         }
 
-        li > a:hover .top {
+        .mvpost > a:hover .top {
             bottom: 52%;
         }
 
-        li > a:hover .middle {
+        .mvpost > a:hover .middle {
             top: 52%;
         }
 
-        li > a:hover .bottom {
+        .mvpost > a:hover .bottom {
             top: 60%;
         }
 
-        li > a .screen::after {
+        .mvpost > a .screen::after {
             content: '';
             display: block;
             position: absolute;
@@ -112,7 +116,7 @@
             transition: all .35s;
         }
 
-        li > a:hover .screen::after {
+        .mvpost > a:hover .screen::after {
             opacity: 1;
         }
 
@@ -269,7 +273,7 @@
                         let reviewer_star = rows[i]['reviewer_star']
                         let release = rows[i]['release']
 
-                        let temp_html = `<li>
+                        let temp_html = `<li class="mvpost">
                                             <a>
                                                 <div class="screen" id=${id}>
                                                     <div class="top">${title}</div>
@@ -281,47 +285,155 @@
                                         </li>`
                         $('.movielist').append(temp_html)
                     }
+
+                    // 페이지네이션 시작
+                        const rowsPerPage = 16 // 한 페이지에 출력되는 개수
+                        const newRows = document.querySelectorAll('.movielist li')
+                        const rowsCount = newRows.length
+                        const pageCount = Math.ceil(rowsCount / rowsPerPage)
+                        const numbers = document.querySelector('#numbers')
+
+                        const prevPageBtn = document.querySelector('.pg .fa-angle-left')
+                        const nextPageBtn = document.querySelector('.pg .fa-angle-right')
+                        let pageActiveIdx = 0 //현재 보고 있는 페이지 그룹 번호
+                        let maxPageNum = 3 //페이지 그룹의 최대 개수
+                        // 페이지네이션 생성
+                       for (let i = 1; i <= pageCount; i++) {
+                            numbers.innerHTML += `<li><a href="" onclick="javascript:window.scrollTo(0,0)">${i}</a></li>`
+
+                        }
+                        const numberBtn = numbers.querySelectorAll('a')
+
+                        //페이지네이션 번호 감추기
+                        for(nb of numberBtn){
+                            nb.style.display = 'none'
+                        }
+                        numberBtn.forEach((item,idx) => {
+                            item.addEventListener('click', (e) => {
+                                e.preventDefault()
+                                displayRow(idx)
+                            })
+                        })
+
+                        function displayRow(idx) {
+                            let start = idx * rowsPerPage
+                            let end = start + rowsPerPage
+                            let rowsArray = [...newRows]
+
+                            for(ra of rowsArray) {
+                                ra.style.display = 'none'
+                            }
+                            let newRow = rowsArray.slice(start, end)
+                            for(nr of newRow){
+                                nr.style.display = ''
+                            }
+                            for(nb of numberBtn){
+                                nb.classList.remove('active')
+                            }
+                            numberBtn[idx].classList.add('active')
+                        }
+                        displayRow(0)
+
+                        //페이지네이션 그룹 표시 함수
+                        function displayPage(num){
+                            //페이지네이션 번호 감추기
+                            for(nb of numberBtn){
+                                nb.style.display = 'none'
+                            }
+                            let totalPageCount = Math.ceil(pageCount/maxPageNum)
+
+                            let pageArr = [...numberBtn]
+                            let start = num * maxPageNum
+                            let end = start + maxPageNum
+                            let pageListArr = pageArr.slice(start, end)
+
+                            for(item of pageListArr){
+                                item.style.display = 'block'
+                            }
+                            if(pageActiveIdx === 0){
+                                prevPageBtn.style.display = 'none'
+                            }else{
+                                prevPageBtn.style.display = 'block'
+                            }
+                            if(pageActiveIdx === totalPageCount - 1){
+                                nextPageBtn.style.display = 'none'
+                            }else{
+                                nextPageBtn.style.display = 'block'
+                            }
+
+                        }
+                        displayPage(0)
+
+                        nextPageBtn.addEventListener('click',()=>{
+                            let nextPageNum = pageActiveIdx * maxPageNum + maxPageNum
+                            displayRow(nextPageNum)
+                            ++pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        prevPageBtn.addEventListener('click',()=>{
+                            let prevPageNum = pageActiveIdx * maxPageNum - maxPageNum
+                            displayRow(prevPageNum)
+                            --pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        //페이지네이션 끝
+
                 }
             })
         }
     </script>
 </head>
 <body>
-<!-- START HEAD BAR -->
-<header class="head-bar">
-    <h1>SORTING HAT</h1>
-    <div class="hat-box"></div>
-    <a href="recommend">영화추천</a>
-    <a href="showing">현재상영작</a>
-    <a href="schedule">상영예정작</a>
-</header>
-<!-- END HEAD BAR-->
+    <!-- START HEAD BAR -->
+    <header class="head-bar">
+        <h1>SORTING HAT</h1>
+        <div class="hat-box"></div>
+        <a href="recommend">영화추천</a>
+        <a href="showing">현재상영작</a>
+        <a href="schedule">상영예정작</a>
+    </header>
+    <!-- END HEAD BAR-->
 
-<section class="cur-box">
-    <h1>상영 예정작</h1>
-    <article class="movielist">
-    </article>
-</section>
+    <section class="cur-box">
+        <h1>상영 예정작</h1>
+        <article class="movielist">
 
-<!-- START MODAL-->
-<div id="modal-container" class="modal unstaged">
-    <div class="modal_overlay"></div>
-    <div class="modal_content_wrap">
-        <div class="modal_content">
-            <div class="modal_vid_box">
-            </div>
+        </article>
 
-            <button class="close_btn">
-                <img class="close_img" alt="딛기" src="../static/icon/modal_exit_button.png"/>
-            </button>
-            <article class="con_tx">
-            </article>
+
+        <!--페이지네이션 시작-->
+        <div class="pg">
+            <i class="fa-solid fa-angle-left" style="display: none"></i>
+            <ol id="numbers">
+
+            </ol>
+            <i class="fa-solid fa-angle-right" style="display: none"></i>
         </div>
-        <div class="cover-bar"></div>
-    </div>
-</div>
-<!-- END MODAL -->
+        <!--페이지네이션 끝-->
 
-{#<script src="../static/modal.js"></script>#}
+    </section>
+
+    <!-- START MODAL-->
+    <div id="modal-container" class="modal unstaged">
+        <div class="modal_overlay"></div>
+        <div class="modal_content_wrap">
+            <div class="modal_content">
+                <div class="modal_vid_box">
+                </div>
+
+                <button class="close_btn">
+                    <img class="close_img" alt="딛기" src="../static/icon/modal_exit_button.png"/>
+                </button>
+                <article class="con_tx">
+                </article>
+            </div>
+            <div class="cover-bar"></div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+
+    <script src="../static/modal.js"></script>
 </body>
 </html>
