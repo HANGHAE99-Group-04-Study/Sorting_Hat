@@ -1,6 +1,7 @@
 import certifi
 import os
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+from datetime import datetime
 from pymongo import MongoClient
 
 import crawling
@@ -67,25 +68,34 @@ def showing_get():
     return jsonify({'movies': movies_list})
 
 
+@app.route('/comment/get', methods=["GET"])
+def comments_get():
+    print(request.args.get('m_id'))
+    comments_list = list(db.comments.find({'m_id': request.args.get('m_id')}, {'_id': False}).sort('time', -1))
+    print(comments_list)
+    return jsonify({'comments': comments_list})
+
+@app.route('/comment/add', methods=["POST"])
+def comments_add():
+    result = request.form
+    comment_time = datetime.now()
+    db.comments.insert_one(
+        {
+            'm_id': result.get('movie_id'),
+            'button': result.get('sel_btn'),
+            'user': result.get('u_name'),
+            'comment': result.get('comment'),
+            'time': comment_time,
+        }
+    )
+    return redirect(url_for(result.get('url')))
+
 @app.route('/update_post', methods=["GET"])
 def sca_get():
     id = request.args.get('id')
     movie = list(db.movies.find({'_id': id}, {}))
     movie[0]['video_url'] = crawling.get_video(id, movie[0]['image'])
     return jsonify({'movies': movie})
-
-
-def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
-
-
-@app.get('/shutdown')
-def shutdown():
-    shutdown_server()
-    return 'Server shutting down...'
 
 
 if __name__ == '__main__':

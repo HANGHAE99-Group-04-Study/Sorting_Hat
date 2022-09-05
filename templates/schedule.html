@@ -21,7 +21,7 @@
             color: white;
             font-size: 14px;
         }
-        
+
         .movielist {
             max-width: 1500px;
             width: 100%;
@@ -166,6 +166,7 @@
                     data: {id: id},
                     success: function (response) {
                         let rows = response['movies']
+                        let m_id = rows[0]['_id']
                         let title = rows[0]['title']
                         let genre = rows[0]['genre']
                         let nation = rows[0]['nation']
@@ -179,60 +180,13 @@
                         let video_url = rows[0]['video_url']
 
                         let temp_html = `<h2 style="font-size: 2.2em">${title}</h2>
-                                    <p>${tx}</p>
-                                    <hr class="modal_hr"/>
-                                    <div style="height: 10px"></div>
-                                    <h3>영화 상세 정보</h3>
-                                    <section class="detail_wrap">
-                                        <article id="detail1">
-                                            <span>관람객 평점</span>
-                                            <svg style="display: none">
-                                              <defs>
-                                                <symbol id="fivestars">
-                                                  <path
-                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                                    fill="#191919"
-                                                    fill-rule="evenodd"
-                                                  />
-                                                  <path
-                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                                    fill="#191919"
-                                                    fill-rule="evenodd"
-                                                    transform="translate(24)"
-                                                  />
-                                                  <path
-                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                                    fill="#191919"
-                                                    fill-rule="evenodd"
-                                                    transform="translate(48)"
-                                                  />
-                                                  <path
-                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                                    fill="#191919"
-                                                    fill-rule="evenodd"
-                                                    transform="translate(72)"
-                                                  />
-                                                  <path
-                                                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
-                                                    fill="#191919"
-                                                    fill-rule="evenodd"
-                                                    transform="translate(96)"
-                                                  />
-                                                </symbol>
-                                              </defs>
-                                            </svg>
-                                            <div class="rating">
-                                              <div class="rating-bg" style="width: 90%"></div>
-                                              <progress class="rating-bg" value="${user_star}" max="10"></progress>
-                                              <svg><use xlink:href="#fivestars" /></svg>
-                                            </div>
-                                            <br/>
-                                            <span>제작국가:</span> ${nation}<br/>
-                                            <span>장르:</span> ${genre}<br/>
-                                            <span>감독:</span> ${director}
-                                        </article>
-                                        <article id="detail2">
-                                            <span>평론가 평점</span>
+                                        <p>${tx}</p>
+                                        <hr class="modal_hr"/>
+                                        <div style="height: 10px"></div>
+                                        <h3>영화 상세 정보</h3>
+                                        <section class="detail_wrap">
+                                            <article id="detail1">
+                                                <span>관람객 평점</span>
                                                 <svg style="display: none">
                                                   <defs>
                                                     <symbol id="fivestars">
@@ -270,25 +224,174 @@
                                                 </svg>
                                                 <div class="rating">
                                                   <div class="rating-bg" style="width: 90%"></div>
-                                                  <progress class="rating-bg" value="${reviewer_star}" max="10"></progress>
+                                                  <progress class="rating-bg" value="${user_star}" max="10"></progress>
                                                   <svg><use xlink:href="#fivestars" /></svg>
-                                            </div>
-                                            <br/>
-                                            <span>개봉일자:</span> ${release}<br/>
-                                            <span>상영시간:</span> ${time}<br/>
-                                            <span>출연:</span> ${actor}
-                                        </article>
-                                    </section>
-                                    <div style="height: 25px"></div>
-                                    <hr class="modal_hr"/>`
+                                                </div>
+                                                <br/>
+                                                <span>제작국가:</span> ${nation}<br/>
+                                                <span>장르:</span> ${genre}<br/>
+                                                <span>감독:</span> ${director}
+                                            </article>
+                                            <article id="detail2">
+                                                <span>평론가 평점</span>
+                                                    <svg style="display: none">
+                                                      <defs>
+                                                        <symbol id="fivestars">
+                                                          <path
+                                                            d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                            fill="#191919"
+                                                            fill-rule="evenodd"
+                                                          />
+                                                          <path
+                                                            d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                            fill="#191919"
+                                                            fill-rule="evenodd"
+                                                            transform="translate(24)"
+                                                          />
+                                                          <path
+                                                            d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                            fill="#191919"
+                                                            fill-rule="evenodd"
+                                                            transform="translate(48)"
+                                                          />
+                                                          <path
+                                                            d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                            fill="#191919"
+                                                            fill-rule="evenodd"
+                                                            transform="translate(72)"
+                                                          />
+                                                          <path
+                                                            d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24"
+                                                            fill="#191919"
+                                                            fill-rule="evenodd"
+                                                            transform="translate(96)"
+                                                          />
+                                                        </symbol>
+                                                      </defs>
+                                                    </svg>
+                                                    <div class="rating">
+                                                      <div class="rating-bg" style="width: 90%"></div>
+                                                      <progress class="rating-bg" value="${reviewer_star}" max="10"></progress>
+                                                      <svg><use xlink:href="#fivestars" /></svg>
+                                                </div>
+                                                <br/>
+                                                <span>개봉일자:</span> ${release}<br/>
+                                                <span>상영시간:</span> ${time}<br/>
+                                                <span>출연:</span> ${actor}
+                                            </article>
+                                        </section>
+                                        <div style="height: 25px"></div>
+                                        <hr class="modal_hr"/>
+                                        <div style="height: 10px"></div>
+                                            <section id="comment_input_wrap">
+                                                <form class="input-group" name="f_comment" action="/comment/add" method="post" onsubmit="return check_comment()">
+                                                    <button class="good-btn" onclick="sel_goodBtn()" type="button">
+                                                    </button>
+                                                    <button class="bad-btn" onclick="sel_badBtn()" type="button">
+                                                    </button>
+                                                    <input type="hidden" name="sel_btn" class="sel-btn" value="false">
+                                                    <input type="hidden" name="movie_id" value=${id}>
+                                                    <input type="hidden" name="url" value="schedule">
+                                                    <input
+                                                            type="text"
+                                                            class="name-input"
+                                                            maxlength="8"
+                                                            placeholder="닉네임"
+                                                            name="u_name"
+                                                    />
+                                                    <input
+                                                            type="text"
+                                                            class="comment-input"
+                                                            maxlength="50"
+                                                            placeholder="한줄평 (50자 제한)"
+                                                            name="comment"
+                                                    />
+                                                    <button class="submit-btn" type="=submit">제출하기</button>
+                                                </form>
+                                                <hr class="comment-hr"/>
+                                                <div class="comment-box">
+                                                </div>
+                                            </section>
+                                            <div style="height: 20px"></div>`
                         $('.con_tx').append(temp_html)
                         let video_html = `<iframe class="modal_vid" src=${video_url} allow='autoplay' frameborder='no' allowfullscreen></iframe>`
                         $('.modal_vid_box').append(video_html)
+                        get_comments(m_id)
                         $('#modal-container').toggleClass('unstaged')
                         $('#modal-container').toggleClass('opaque')
                     }
                 })
             });
+        }
+
+        function get_comments(m_id) { // DB에서 코멘트 가져오기
+            console.log(m_id)
+            $('.comment-box').empty()
+            $.ajax({
+                type: 'GET',
+                url: '/comment/get',
+                data: {m_id: m_id},
+                success: function (response) {
+                    let rows = response['comments']
+                    for (let i = 0; i < rows.length; i++) {
+                        let user = rows[i]['user'];
+                        let button = rows[i]['button'];
+                        let comment = rows[i]['comment'];
+                        if (button === 'good') {
+                            button = '🔵'
+                        } else if (button === 'bad') {
+                            button = '🔴'
+                        }
+                        let temp_html = `<div class="comment-wrap">
+                                            <div id="color-sign">${button}</div>
+                                            <div id="nickname">${user}</div>
+                                            <div id="comment">
+                                                ${comment}
+                                            </div>
+                                        </div>
+                                        <hr class="comment-hr"/>`
+                        $('.comment-box').append(temp_html)
+                    }
+                }
+            })
+        }
+
+
+        function sel_goodBtn() {
+            if (document.querySelector('.bad-btn').classList.contains('active')) {
+                document.querySelector('.bad-btn').classList.toggle('active');
+            }
+            document.querySelector('.good-btn').classList.toggle('active');
+            document.querySelector('.sel-btn').value = 'good';
+            if (document.querySelector('.active') === null) {
+                document.querySelector('.sel-btn').value = 'false';
+            }
+        }
+
+        function sel_badBtn() {
+            if (document.querySelector('.good-btn').classList.contains('active')) {
+                document.querySelector('.good-btn').classList.toggle('active');
+            }
+            document.querySelector('.bad-btn').classList.toggle('active');
+            document.querySelector('.sel-btn').value = 'bad';
+            if (document.querySelector('.active') === null) {
+                document.querySelector('.sel-btn').value = 'false';
+            }
+        }
+
+        function check_comment() {
+            if(f_comment.sel_btn.value === 'false') {
+                alert("좋아요 싫어요 중 하나를 선택하세요.");
+                return false;
+            } else if (f_comment.u_name.value === "") {
+                f_comment.u_name.focus();
+                alert("닉네임을 입력하세요.");
+                return false;
+            } else if (f_comment.comment.value === '') {
+                f_comment.comment.focus();
+                alert("코멘트를 작성하세요.");
+                return false;
+            } else return true;
         }
 
         function listing() { // DB에서 영화 항목 가져오기
@@ -300,9 +403,9 @@
                 success: function (response) {
                     let rows = response['movies']
                     for (let i = 0; i < rows.length; i++) {
-                        // if (rows[i]['showing'] !== 2) {
-                        //     continue
-                        // }
+                        if (rows[i]['showing'] !== 2) {
+                            continue
+                        }
                         let id = rows[i]['_id']
                         let image = rows[i]['image']
                         let title = rows[i]['title']
@@ -363,6 +466,6 @@
 </div>
 <!-- END MODAL -->
 
-{#<script src="../static/modal.js"></script>#}
+
 </body>
 </html>
