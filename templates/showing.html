@@ -1,172 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SORTING HAT:현재상영작</title>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link href="../static/head-bar.css" rel="stylesheet">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SORTING HAT:영화추천</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
 
-    <style>
-        body {
-            background-color: black;
-            color:white;
-            font-size:14px;
-        }
-        .wrap-p{
-            font-size: 20px;
-            max-width: 1410px;
-            width: 100%;
-            margin: 0 auto;
+    <link href="../static/head-bar.css" rel="stylesheet"/>
+    <link href="../static/DP.css" rel="stylesheet"/>
+    <link href="../static/star.css" rel="stylesheet"/>
+    <link href="../static/modal.css" rel="stylesheet"/>
+    <link href="../static/showing.css" rel="stylesheet"/>
+    <link href="../static/pagination.css" rel="stylesheet"/>
 
 
 
-        }
-        .movielist{
-            max-width: 1500px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        ul{
-            font-size: 0;
-        }
-        li{
-            display: inline-block;
-            vertical-align: top;
-            width: 25%;
-        }
-        li > a{
-            display: block;
-            width: auto;
-            text-decoration: none;
-            margin: 5px;
-        }
-        li > a .screen{
-            position: relative;
-            overflow: hidden;
-        }
-        li > a .screen .top{
-            position: absolute;
-            bottom: 150%;
-            left: 30px;
-            z-index: 2;
-            color: #fff;
-            font-size: 26px;
-            font-weight: bold;
 
-        }
-        li > a .screen .middle{
-            position: absolute;
-            top: 150%;
-            left: 30px;
-            z-index: 2;
-            color: #fff;
-            font-size: 12px;
-
-        }
-        li > a .screen .bottom{
-            position: absolute;
-            top: 150%;
-            left: 30px;
-            z-index: 2;
-            color: #fff;
-            font-size: 12px;
-
-
-        }
-        li > a .screen img{
-            width: 100%;
-        }
-
-        li > a:hover .top {
-            bottom: 52%;
-        }
-        li > a:hover .middle {
-            top: 52%;
-        }
-        li > a:hover .bottom {
-            top: 60%;
-        }
-
-        li > a .screen::after{
-            content:'';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,.8);
-            z-index: 1;
-            opacity: 0;
-            transition: all .35s;
-        }
-        li > a:hover .screen::after{
-            opacity: 1;
-        }
-
-        /*
-        .wrap-movie{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-        }
-        .movie-post{
-            background-color: white;
-            width: 350px;
-            height: 450px;
-            margin: 20px;
-
-        }
-
-        .movie-img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        */
-    </style>
     <script>
-        $(document).ready(function(){
-          listing();
-        });
-        function listing() {
-            $('#movielist').empty()
-            $.ajax({
-                type: 'GET',
-                url: '/update',
-                data: {},
-                success: function (response) {
-                    let rows = response['movies']
-                    console.log(rows)
-                    for (let i = 0; i < rows.length; i++) {
-                        if(rows[i]['showing'] !== 1){
-                            continue
-                        }
-                        let image = rows[i]['image']
-                        let title = rows[i]['title']
-                        let age = rows[i]['age']
-                        let user_star = rows[i]['user_star']
-                        let reviewer_star = rows[i]['reviewer_star']
-                        let release = rows[i]['release']
 
-                        let temp_html = `<li>
-                                            <a href="">
-                                                <div class="screen">
+        $(document).ready(function () {
+            listing()
+            function listing() {
+                $('#movielist').empty()
+                $('.pgbox').empty()
+                $.ajax({
+                    type: 'GET',
+                    url: '/update',
+                    data: {},
+                    success: function (response) {
+                        let rows = response['movies']
+                        for (let i = 0; i < rows.length; i++) {
+                            if (rows[i]['showing'] !== 1) { // || typeof rows[i]['image'] === "undefined"
+                                continue
+                            }
+                            let id = rows[i]['_id']
+                            let image = rows[i]['image']
+                            let title = rows[i]['title']
+                            let age = rows[i]['age']
+                            let user_star = rows[i]['user_star']
+                            let reviewer_star = rows[i]['reviewer_star']
+                            let release = rows[i]['release']
+                            let genre = rows[i]['genre']
+                            //let comment = rows[i]['comment']
+
+
+                            let temp_html = `<li class="mvpost">
+                                            <a>
+                                                <div class="screen" id=${id}>
                                                     <div class="top">${title}</div>
-                                                    <div class="middle">${user_star} ${reviewer_star}</div>
+                                                    <div class="middle">관람객 평점 ${user_star} 평론가 평점 ${reviewer_star}</div>
+                                                    <div class="middle2">${genre}</div>
+                                                    <div class="middle3">${age}</div>
                                                     <div class="bottom">${release}</div>
                                                     <img src=${image}>
                                                 </div>
                                             </a>
                                         </li>`
-                        $('#movielist').append(temp_html)
+                            $('#movielist').append(temp_html)
+
+                        }
+                        // 페이지네이션 시작
+                        const rowsPerPage = 16 // 한 페이지에 출력되는 개수
+                        const newRows = document.querySelectorAll('#movielist li')
+                        const rowsCount = newRows.length
+                        const pageCount = Math.ceil(rowsCount / rowsPerPage)
+                        const numbers = document.querySelector('#numbers')
+
+                        const prevPageBtn = document.querySelector('.pg .fa-angle-left')
+                        const nextPageBtn = document.querySelector('.pg .fa-angle-right')
+                        let pageActiveIdx = 0 //현재 보고 있는 페이지 그룹 번호
+                        let maxPageNum = 3 //페이지 그룹의 최대 개수
+                        // 페이지네이션 생성
+                       for (let i = 1; i <= pageCount; i++) {
+                            numbers.innerHTML += `<li><a href="" onclick="javascript:window.scrollTo(0,0)">${i}</a></li>`
+
+                        }
+                        const numberBtn = numbers.querySelectorAll('a')
+
+                        //페이지네이션 번호 감추기
+                        for(nb of numberBtn){
+                            nb.style.display = 'none'
+                        }
+                        numberBtn.forEach((item,idx) => {
+                            item.addEventListener('click', (e) => {
+                                e.preventDefault()
+                                displayRow(idx)
+                            })
+                        })
+
+                        function displayRow(idx) {
+                            let start = idx * rowsPerPage
+                            let end = start + rowsPerPage
+                            let rowsArray = [...newRows]
+
+                            for(ra of rowsArray) {
+                                ra.style.display = 'none'
+                            }
+                            let newRow = rowsArray.slice(start, end)
+                            for(nr of newRow){
+                                nr.style.display = ''
+                            }
+                            for(nb of numberBtn){
+                                nb.classList.remove('active')
+                            }
+                            numberBtn[idx].classList.add('active')
+                        }
+                        displayRow(0)
+
+                        //페이지네이션 그룹 표시 함수
+                        function displayPage(num){
+                            //페이지네이션 번호 감추기
+                            for(nb of numberBtn){
+                                nb.style.display = 'none'
+                            }
+                            let totalPageCount = Math.ceil(pageCount/maxPageNum)
+
+                            let pageArr = [...numberBtn]
+                            let start = num * maxPageNum
+                            let end = start + maxPageNum
+                            let pageListArr = pageArr.slice(start, end)
+
+                            for(item of pageListArr){
+                                item.style.display = 'block'
+                            }
+                            if(pageActiveIdx === 0){
+                                prevPageBtn.style.display = 'none'
+                            }else{
+                                prevPageBtn.style.display = 'block'
+                            }
+                            if(pageActiveIdx === totalPageCount - 1){
+                                nextPageBtn.style.display = 'none'
+                            }else{
+                                nextPageBtn.style.display = 'block'
+                            }
+
+                        }
+                        displayPage(0)
+
+                        nextPageBtn.addEventListener('click',()=>{
+                            let nextPageNum = pageActiveIdx * maxPageNum + maxPageNum
+                            displayRow(nextPageNum)
+                            ++pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        prevPageBtn.addEventListener('click',()=>{
+                            let prevPageNum = pageActiveIdx * maxPageNum - maxPageNum
+                            displayRow(prevPageNum)
+                            --pageActiveIdx
+                            displayPage(pageActiveIdx)
+                            window.scrollTo(0,0)
+                        })
+                        //페이지네이션 끝
+
+
                     }
-                }
-            })
-        }
+                })
+            }
+
+        })
+
     </script>
 </head>
 <body>
@@ -179,39 +185,30 @@
         <a href="schedule">상영예정작</a>
     </div>
     <!-- END HEAD BAR-->
-    <img src="https://blog.kakaocdn.net/dn/cN8Jog/btrG3qjo3d0/YON0Dq2Ic8kJNTKV5V0ntK/img.jpg" width="100%">
+
 
     <!-- 상영작 시작 -->
-    <div class="wrap-p">
-        <p>현재상영작</p>
-    </div>
-    <div id="movielist">
-    </div>
+    <section class="moviebox">
+        <h5 class="pb">현재상영작</h5>
+        <!-- 상영작 포스터 리스트 시작-->
+        <article id="movielist">
+
+        </article>
+        <!-- 상영작 포스터 리스트 끝-->
+
+        <!--페이지네이션 시작-->
+        <div class="pg">
+            <i class="fa-solid fa-angle-left" style="display: none"></i>
+            <ol id="numbers">
+
+            </ol>
+            <i class="fa-solid fa-angle-right" style="display: none"></i>
+        </div>
+        <!--페이지네이션 끝-->
+    </section>
     <!-- 상영작 끝 -->
 
 
-
-
-
-
-    <!--현재상영작 시작
-    <div class="all-movie">
-
-        <div class="wrap-movie">
-            <div class="movie-post"><img class="movie-img" src="https://www.kukinews.com/data/kuk/image/2022/06/10/kuk202206100269.680x.0.jpg"></div>
-            <div class="movie-post"></div>
-            <div class="movie-post"></div>
-            <div class="movie-post"></div>
-        </div>
-
-        <div class="wrap-movie">
-            <div class="movie-post"></div>
-            <div class="movie-post"></div>
-            <div class="movie-post"></div>
-            <div class="movie-post"></div>
-        </div>
-    </div>
-    현재상영작 끝-->
 
 
 </body>
