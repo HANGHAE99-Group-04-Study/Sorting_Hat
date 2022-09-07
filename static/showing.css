@@ -1,0 +1,133 @@
+body {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+}
+
+.moviebox {
+    margin-top: 100px;
+}
+.pb {
+    max-width: 1480px;
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+}
+.movielist {
+    max-width: 1500px;
+    width: 100%;
+    margin: 0 auto;
+}
+ul {
+    font-size: 0;
+}
+.mvpost {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+}
+
+.mvpost > a {
+    display: block;
+    width: auto;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.mvpost > a .screen {
+    position: relative;
+    overflow: hidden;
+}
+
+.mvpost > a .screen .top {
+    position: absolute;
+    bottom: 150%;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.mvpost > a .screen .middle {
+    position: absolute;
+    top: 150%;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    font-size: 14px;
+
+}
+
+.mvpost > a .screen .middle2 {
+    position: absolute;
+    top: 150%;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    font-size: 14px;
+
+}
+
+.mvpost > a .screen .middle3 {
+    position: absolute;
+    top: 150%;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    font-size: 14px;
+
+}
+
+.mvpost > a .screen .bottom {
+    position: absolute;
+    top: 150%;
+    left: 30px;
+    z-index: 2;
+    color: #fff;
+    font-size: 14px;
+
+
+}
+
+.mvpost > a .screen img {
+    width: 100%;
+}
+
+.mvpost > a:hover .top {
+    bottom: 52%;
+}
+
+.mvpost > a:hover .middle {
+    top: 52%;
+}
+
+.mvpost > a:hover .middle2 {
+    top: 57%;
+}
+
+.mvpost > a:hover .middle3 {
+    top: 62%;
+}
+
+.mvpost > a:hover .bottom {
+    top: 67%;
+}
+
+.mvpost > a .screen::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    z-index: 1;
+    opacity: 0;
+    transition: all .35s;
+}
+
+.mvpost > a:hover .screen::after {
+    opacity: 1;
+}
