@@ -116,15 +116,6 @@
             width: 80px;
             height: 80px;
         }
-
-        .picked-box .stamp {
-            position: absolute;
-            top: 75%;
-            left: 86.5%;
-            width: 80px;
-            height: 80px;
-        }
-
         .btn {
             position: relative;
             left: 50%;
@@ -173,13 +164,20 @@
                 opacity: 0;
             }
         }
+        .picked-box .stamp {
+            position: absolute;
+            top: 75%;
+            left: 86.5%;
+            width: 80px;
+            height: 80px;
+        }
         #box0 {
             position: absolute;
 
             width: 600px;
             height: 330px;
-            left: 18%;
-            top: 14%;
+            margin-left: 18.2%;
+            margin-top: 7%;
             background: #AB00FC;
             filter: brightness(0.5);
         }
@@ -192,8 +190,8 @@
 
             width: 600px;
             height: 330px;
-            top: 14%;
-            right: 18%;
+            margin-top: 7%;
+            margin-left: 50.2%;
             filter: brightness(0.5);
             background: #FC71FF;
         }
@@ -205,8 +203,8 @@
             position: absolute;
             width: 600px;
             height: 330px;
-            left: 18%;
-            top: 53%;
+            margin-left: 18.2%;
+            margin-top: 26%;
             filter: brightness(0.5);
             background: #4B5DFF;
         }
@@ -218,8 +216,8 @@
             position: absolute;
             width: 600px;
             height: 330px;
-            right: 18%;
-            top: 53%;
+            margin-left: 50.2%;
+            margin-top: 26%;
             filter: brightness(0.5);
             background: #FFF854;
         }
@@ -230,16 +228,16 @@
         .text {
             position: absolute;
 
-            left: 45%;
-            top: 50%;
+            margin-left: 45%;
+            margin-top: 24.7%;
         }
 
         .con1 {
             position: absolute;
             width: 300px;
             height: 240px;
-            left: 27.5%;
-            top: 20%;
+            margin-left: 27.5%;
+            margin-top: 10%;
             background-size: 240px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture6-512.png");
             pointer-events: none;
@@ -249,8 +247,8 @@
             position: absolute;
             width: 250px;
             height: 260px;
-            right: 27.5%;
-            top: 20%;
+            margin-left: 59.5%;
+            margin-top: 10%;
             background-size: 260px;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture19-512.png");
             pointer-events: none;
@@ -260,8 +258,8 @@
             position: absolute;
             width: 250px;
             height: 280px;
-            left: 27%;
-            top: 58%;
+            margin-left: 27%;
+            margin-top: 28.5%;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture3-512.png");
             background-size: 260px;
             pointer-events: none;
@@ -271,8 +269,8 @@
             position: absolute;
             width: 270px;
             height: 300px;
-            right: 27%;
-            top: 58%;
+            margin-left: 59%;
+            margin-top: 28.5%;
             background-image: url("https://cdn2.iconfinder.com/data/icons/people-80/96/Picture5-512.png");
             background-size: 280px;
             pointer-events: none;
@@ -464,9 +462,30 @@
 
         // START : 동행인선택
         // num_with 0 : 혼자, 1 : 커플, 2 : 친구, 3 : 가족
+        function putOn_with(num) {
+            document.getElementById('box' + num).className = 'picked-box';
+        }
+
+
+        function putDown_with(num_with) {
+            num_pickWith = -1;
+            document.getElementById('box' + num_with).className = 'box';
+        }
+
+
         function pick_with(num_with) {
-            num_pickWith = num_with;
-            document.getElementById('box' + num_with).className = 'picked-box';
+            if (num_pickWith === -1) {
+                num_pickWith = num_with;
+                $('#box' + num_with).css('filter', 'brightness(1)');
+                putOn_with(num_with);
+            } else if (num_pickWith === num_with) {
+                // 이미 선택된 영화일 경우
+                $('#box' + num_with).css('filter', '');
+                putDown_with(num_with);
+            } else {
+                // 이미 1개가 선택된 경우
+                alert('이미 선택하셨습니다.');
+            }
         }
         // END : 동행인선택
 
@@ -534,6 +553,7 @@
                 }
             })
         }
+
     </script>
 </head>
 <body>
@@ -599,5 +619,4 @@
 </div>
 </body>
 </html>
-
 
