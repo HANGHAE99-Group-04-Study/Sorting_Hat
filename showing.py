@@ -30,14 +30,21 @@ def get_url(url, tag):
         m_id = re.search(r'(?<=code=)(.*?)$', movie.select_one('dl > dt > a')['href']).group()  # 영화별 고유 ID값
         m_title = movie.select_one('dl > dt > a').text  # 영화제목
         doc = crawling.get_all(m_id, m_title, tag)
-        print(doc['showing'])
+        print(doc)
         db.movies.update_one(
-            {'_id': doc['id']},
             {
+                '_id': doc['id'],
+             },
+            {
+                "$set": {
+                    'user_star': doc['user_star'],
+                    'image': doc['image'],
+                    'reviewer_star': doc['reviewer_star'],
+                    'showing': doc['showing']
+                },
                 "$setOnInsert": {
                     '_id': doc['id'],
                     'title': doc['title'],
-                    'image': doc['image'],
                     'age': doc['age'],
                     'genre': doc['genre'],
                     'video_url': doc['video_url'],
@@ -47,22 +54,9 @@ def get_url(url, tag):
                     'director': doc['director'],
                     'actor': doc['actor'],
                     'tx': doc['tx'],
-                    'user_star': doc['user_star'],
-                    'reviewer_star': doc['reviewer_star'],
-                    'showing': doc['showing'],
                 },
             },
             upsert=True
-        )
-        db.movies.update_one(
-            {'_id': doc['id']},
-            {
-                "$set": {
-                    'user_star': doc['user_star'],
-                    'reviewer_star': doc['reviewer_star'],
-                    'showing': doc['showing'],
-                },
-            }
         )
 
 get_url(current_url, 1)

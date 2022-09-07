@@ -11,7 +11,7 @@ url = 'https://movie.naver.com/movie/bi/mi/basic.naver?code='  # 영화 정보
 # ---- 이미지 URL ----
 def get_image(data):
     try:
-        image = data.select_one('#content > div.article > div.mv_info_area > div.poster > a > img')['src']
+        image = re.search(r'(.*?)(?=\?)', data.select_one('#content > div.article > div.mv_info_area > div.poster > a > img')['src']).group() + "?type=m886_590_2"
     except TypeError:
         image = 'https://ssl.pstatic.net/static/movie/2012/06/dft_img203x290.png'
     return image
