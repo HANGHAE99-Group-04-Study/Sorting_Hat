@@ -48,7 +48,7 @@ def recommend_calc():
             for m_genre in movie['genre']:
                 if genre_receive.count(m_genre) >= 1:
                     print(movie['title'])
-                    return render_template('result.html', r_title=movie['title'])
+                    return render_template('result.html', r_title=movie['title'], r_image=movie['image'])
     return render_template('noresult.html')
 
 
