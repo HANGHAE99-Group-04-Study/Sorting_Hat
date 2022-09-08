@@ -38,7 +38,7 @@ https://sorting_hat.pyuri.dev/
 [크롤링 함수 python](crawling.py)
 
 ## 4. Git Actions
-1. [movies DB 매일 새벽 5시 업데이트](.github/workflows/showing_update.yml) -> git actions를 이용하여 
+1. [movies DB 매일 새벽 5시 업데이트](.github/workflows/showing_update.yml)
 2. [pull request 시 서버에 페이지 자동 업로드](.github/workflows/update_server.yml)
 
 #### DB 업데이트 상태
