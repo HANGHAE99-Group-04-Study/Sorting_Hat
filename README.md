@@ -44,3 +44,4 @@ https://sorting_hat.pyuri.dev/
 #### DB 업데이트 상태
 [![상영작 불러오기](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml/badge.svg)](https://github.com/HANGHAE99-Group-04-Study/Sorting_Hat/actions/workflows/showing_update.yml)
 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHANGHAE99-Group-04-Study%2FSorting_Hat&count_bg=%23D127C4&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
