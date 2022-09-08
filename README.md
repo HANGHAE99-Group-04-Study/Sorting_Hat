@@ -34,6 +34,7 @@ https://sorting_hat.pyuri.dev/
 ![image](https://user-images.githubusercontent.com/5901912/189132460-979dbc78-c2cb-4cf7-ac4c-19d330a0a598.png)
 
 [movies DB 업데이트 python](showing.py) -> git actions를 이용하여 매일 새벽 5시 업데이트
+
 [크롤링 함수 python](crawling.py)
 
 ## 4. Git Actions
