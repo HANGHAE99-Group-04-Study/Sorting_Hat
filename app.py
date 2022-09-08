@@ -8,7 +8,7 @@ import crawling
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.amhacid.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())
+client = MongoClient(os.environ.get("MONGO"), tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
 
 
