@@ -8,7 +8,7 @@ import crawling
 
 app = Flask(__name__)
 
-client = MongoClient(os.environ.get("MONGO"), tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.amhacid.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())
 db = client.Sorting_Hat_Dev
 
 
@@ -75,6 +75,7 @@ def comments_get():
     print(comments_list)
     return jsonify({'comments': comments_list})
 
+
 @app.route('/comment/add', methods=["POST"])
 def comments_add():
     result = request.form
@@ -89,6 +90,7 @@ def comments_add():
         }
     )
     return redirect(url_for(result.get('url')))
+
 
 @app.route('/update_post', methods=["GET"])
 def sca_get():
