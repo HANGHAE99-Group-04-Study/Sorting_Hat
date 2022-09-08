@@ -31,11 +31,15 @@
 #numbers li a:hover {
     /*font-size: 20px;*/
     font-weight: bold;
+    background-color: #900;
+    border-radius: 50px;
 
 }
 
 #numbers li a.active {
     /*font-size: 20px;*/
     font-weight: bold;
+    background-color: #900;
+    border-radius: 50px;
 
 }
