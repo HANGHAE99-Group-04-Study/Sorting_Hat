@@ -10,7 +10,7 @@ on:
 #    branches: [ "main" ]
   schedule:
     # 매일 새벽 5시 업데이트
-    - cron: '0 20 * * *'
+    # - cron: '0 20 * * *'
 
 permissions:
   contents: read
